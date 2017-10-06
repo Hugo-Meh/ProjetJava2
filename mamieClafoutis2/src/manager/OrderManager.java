@@ -18,7 +18,8 @@ public class OrderManager {
 	private static String queryFirstDate = "select top 1 date from commande order by date asc";
 	private static String queryLastDate = "select top 1 date from commande order by date desc";
 	private static String UpdateAdminValidate = "Update order set valide=? where id=?";
-	private static String Insert="insert into commande ('utilisateur_id,date,valide') values (?,?,?)";
+	private static String Insert = "insert into commande ('utilisateur_id,date,valide') values (?,?,?)";
+
 	public static ArrayList<Order> getAll() {
 		ArrayList<Order> order = null;
 
@@ -219,7 +220,8 @@ public class OrderManager {
 		return retour;
 	}
 
-	// prochainement on peut imaginer que l'atelier valide la preparation pour livraison
+	// prochainement on peut imaginer que l'atelier valide la preparation pour
+	// livraison
 	public static boolean UpdateValidationByManifacture(int idOrder, boolean isvalide) {
 		return false;
 	}
@@ -232,16 +234,19 @@ public class OrderManager {
 	}
 
 	// insertion des commandes par les clients
-// retoune la valeur de l'id genere a linsertion
+	// retoune la valeur de l'id genere a linsertion
 	public static int Insert(int idUser, Order order) {
-		int retour=-1;
+		int retour = -1;
 		try {
-			PreparedStatement ps=ConnexionBDD.getPs(Insert);
+			PreparedStatement ps = ConnexionBDD.getPs(Insert);
 			ps.setInt(1, idUser);
 			ps.setDate(2, (java.sql.Date) order.getDate());
 			ps.setBoolean(3, false);
-			if(ps.executeUpdate()>0)
-				retour=(ps.getGeneratedKeys()).getInt(1);
+			if (ps.executeUpdate() > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next())
+					retour = rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -257,4 +262,3 @@ public class OrderManager {
 	}
 
 }
-
