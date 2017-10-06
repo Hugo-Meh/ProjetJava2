@@ -10,7 +10,7 @@ public class Product implements Serializable {
 	private float price;
 	private int idCategroy;	
 	// ajouter quantite momo 
-	
+	// oui c'est moi 
 	public Product(){
 	
 	}
