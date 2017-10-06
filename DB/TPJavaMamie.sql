@@ -153,6 +153,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produit` (
   `description` VARCHAR(255) NOT NULL,
   `prix` FLOAT NOT NULL,
   `url_image` VARCHAR(255) NULL,
+  `estvisible` 	TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idproduit_UNIQUE` (`id` ASC),
   INDEX `fk_produit_categorie1_idx` (`categorie_id` ASC),
