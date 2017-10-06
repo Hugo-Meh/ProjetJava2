@@ -1,13 +1,14 @@
 package entities;
 
 public class User {
+	
 	private int id;
 	private String lastName;
 	private String firstName;
 	private int establishmentId;
 	private int roleId;
 	private String username;
-	private String password;
+	
 
 	// Getters
 	public int getId() {
@@ -32,10 +33,6 @@ public class User {
 
 	public String getUsername() {
 		return this.username;
-	}
-
-	public String getPassword() {
-		return this.password;
 	}
 
 	// Setters
@@ -63,7 +60,4 @@ public class User {
 		this.username = username;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
 }

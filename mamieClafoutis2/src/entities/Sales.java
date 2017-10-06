@@ -1,13 +1,13 @@
 package entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class Sales {
 	
 	private Date date;
-	private int quantite;
+	private int quantity;
 	private int userId;
-	private int productId;
+	private int productId;	
 	
 	Sales(){
 		
@@ -19,14 +19,6 @@ public class Sales {
 
 	public void setDate(Date date) {
 		this.date = date;
-	}
-
-	public int getQuantite() {
-		return quantite;
-	}
-
-	public void setQuantite(int quantite) {
-		this.quantite = quantite;
 	}
 
 	public int getUserId() {
@@ -44,4 +36,14 @@ public class Sales {
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
+	
 }

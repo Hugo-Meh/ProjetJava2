@@ -30,7 +30,6 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
-					// u.setPassword(result.getString("password"));
 					
 				}
 		}
@@ -71,7 +70,6 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
-					// u.setPassword(result.getString("password"));
 					
 				}
 		}
@@ -98,7 +96,6 @@ public class UserManager {
 			ps.setInt(4, newUser.getEstablishmentId());
 			ps.setInt(5, newUser.getRoleId());
 			ps.setString(6, newUser.getUsername());
-			ps.setString(7, newUser.getPassword());
 			int nbretour = ps.executeUpdate();
 			if(nbretour>0){
 				retour=true;
@@ -116,7 +113,7 @@ public class UserManager {
 		return retour;
 	}
 
-	// mis a jour d'un employé type de fonction
+	// mis a jour d'un employï¿½ type de fonction
 	// ou retirer de la liste avec un boolean
 	public static boolean Update(User newUser) {
 		int nbrUpdate = 0;
@@ -129,7 +126,6 @@ public class UserManager {
 			ps.setInt(4, newUser.getEstablishmentId());
 			ps.setInt(5, newUser.getRoleId());
 			ps.setString(6, newUser.getUsername());
-			ps.setString(7, newUser.getPassword());
 			nbrUpdate = ps.executeUpdate();
 
 			if (nbrUpdate > 0)
