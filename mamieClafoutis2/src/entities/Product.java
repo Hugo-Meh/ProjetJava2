@@ -9,8 +9,11 @@ public class Product implements Serializable {
 	private String urlImage;
 	private float price;
 	private int idCategroy;	
+	
 	// ajouter quantite momo 
-	// oui c'est moi 
+	 private boolean isVisible;
+	 private int quantity;
+	 private String ref;
 	public Product(){
 	
 	}
@@ -61,6 +64,30 @@ public class Product implements Serializable {
 
 	public void setIdCategroy(int idCategroy) {
 		this.idCategroy = idCategroy;
+	}
+
+	public boolean isVisible() {
+		return isVisible;
+	}
+
+	public void setVisible(boolean isVisible) {
+		this.isVisible = isVisible;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public String getRef() {
+		return ref;
+	}
+
+	public void setRef(String ref) {
+		this.ref = ref;
 	}
 
 }

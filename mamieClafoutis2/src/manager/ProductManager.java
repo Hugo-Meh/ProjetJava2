@@ -13,8 +13,15 @@ public class ProductManager {
 	private static String queryByIdCategory = "select * from produit where categorie_id=?";
 	private static String queryByName = "select * from produit where nom=?";
 	private static String queryById = "select * from produit where id=?";
-	private static String queryInsert = "insert into produit ('nom','categorie_id','ref','description','prix','urlImage') values(?,?,?,?,?,?)";
-	private static String queryUpdate = "update produit set nom=? ,categorie_id=?, description=?,prix=?, urlImage=? where id=?";
+	private static String queryInsert = "insert into produit ('nom','categorie_id','reference','description','prix','url_Image','estvisible') values(?,?,?,?,?,?,?)";
+	private static String queryUpdate = "update produit set nom=? ,categorie_id=?, description=?,prix=?, url_Image=?,estvisible=? where id=?";
+//	private static String queryDelete = "delete from produit where id=?";
+//	private static String queryDeleteAssociateLineIngredient = "delete from ligne_ingredient where produit_id=?";
+//	private static String queryDeleteAssociateRecipe = "delete from recette where produit_id=?";
+//	private static String queryDeleteAssociateLineCommande = "delete from ligne_de_commande where produit_id=?";
+	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as as categorie_id,P.description as description,P.prix as prix, "
+			+ "P.url_image as url_image,P.reference as reference,LC.quantite as quantite, from produit as P inner join ligne_de_commande as LC on P.id=LC.produit_idproduit"
+			+ "inner join commande as C on LC.commande_id=C.id where C.id=?";
 
 	// retourner tout les produit de la table produit
 	public static ArrayList<Product> getAll() {
@@ -31,7 +38,10 @@ public class ProductManager {
 				p.setName(result.getString("nom"));
 				p.setDescription(result.getString("description"));
 				p.setPrice(result.getFloat("prix"));
-				p.setUrlImage(result.getString("urlImage"));
+				p.setUrlImage(result.getString("url_Image"));
+				p.setVisible(result.getBoolean("estvisible"));
+				p.setRef(result.getString("reference"));
+				p.setIdCategroy(result.getInt("categorie_id"));
 				retour.add(p);
 			}
 
@@ -60,7 +70,11 @@ public class ProductManager {
 				p.setName(result.getString("nom"));
 				p.setDescription(result.getString("description"));
 				p.setPrice(result.getFloat("prix"));
-				p.setUrlImage(result.getString("urlImage"));
+				p.setUrlImage(result.getString("url_Image"));
+				p.setVisible(result.getBoolean("estvisible"));
+				p.setRef(result.getString("reference"));
+				p.setIdCategroy(result.getInt("categorie_id"));
+
 				retour.add(p);
 			}
 
@@ -89,7 +103,10 @@ public class ProductManager {
 				p.setName(result.getString("nom"));
 				p.setDescription(result.getString("description"));
 				p.setPrice(result.getFloat("prix"));
-				p.setUrlImage(result.getString("urlImage"));
+				p.setUrlImage(result.getString("url_Image"));
+				p.setVisible(result.getBoolean("estvisible"));
+				p.setRef(result.getString("reference"));
+				p.setIdCategroy(result.getInt("categorie_id"));
 				retour.add(p);
 			}
 
@@ -119,7 +136,10 @@ public class ProductManager {
 					product.setName(result.getString("nom"));
 					product.setDescription(result.getString("description"));
 					product.setPrice(result.getFloat("prix"));
-					product.setUrlImage(result.getString("urlImage"));
+					product.setUrlImage(result.getString("url_Image"));
+					product.setVisible(result.getBoolean("estvisible"));
+					product.setRef(result.getString("reference"));
+					product.setIdCategroy(result.getInt("categorie_id"));
 
 				}
 
@@ -133,18 +153,22 @@ public class ProductManager {
 		return product;
 	}
 
-	public static boolean Insert(Product item) {
-		boolean retour = false;
+	public static int Insert(Product item) {
+		int retour = -1;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
 			ps.setString(1, item.getName());
 			ps.setInt(2, item.getIdCategroy());
-			// ps.setString(3, item.getRef());
+			ps.setString(3, item.getRef());
 			ps.setString(4, item.getDescription());
 			ps.setFloat(5, item.getPrice());
 			ps.setString(6, item.getUrlImage());
-			if(ps.executeUpdate()>0)
-				retour=true;
+			ps.setBoolean(7, item.isVisible());
+			if (ps.executeUpdate() > 0) {
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next())
+					retour = rs.getInt(1);
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +191,8 @@ public class ProductManager {
 			ps.setString(3, item.getDescription());
 			ps.setFloat(4, item.getPrice());
 			ps.setString(5, item.getUrlImage());
-			ps.setInt(6, item.getId());
+			ps.setBoolean(6, item.isVisible());
+			ps.setInt(7, item.getId());
 			nbrUpdate = ps.executeUpdate();
 			if (nbrUpdate > 0)
 				retour = true;
@@ -181,4 +206,37 @@ public class ProductManager {
 		return retour;
 	}
 
+	public static boolean delete(int id) {
+		boolean retour = false;
+		return retour;
+	}
+
+	public static ArrayList<Product> getByIdOrder(int idOrder) {
+		ArrayList<Product> products = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryByIdOrder);
+			ps.setInt(1, idOrder);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				products = new ArrayList<>();
+				while (rs.next()) {
+					Product p = new Product();
+					p.setId(rs.getInt("id"));
+					p.setName(rs.getString("nom"));
+					p.setIdCategroy(rs.getInt("categorie_id"));
+					p.setDescription(rs.getString("description"));
+					p.setPrice(rs.getFloat("prix"));
+					p.setUrlImage(rs.getString("url_image"));
+					p.setRef(rs.getString("reference"));
+					p.setQuantity(rs.getInt("quantite"));
+					products.add(p);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return products;
+	}
 }

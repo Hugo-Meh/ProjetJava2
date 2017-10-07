@@ -1,8 +1,10 @@
 package entities;
 
 public class Ingredient {
-	int id;
-	String name;
+	private int id;
+	private String name;
+	private float qauntity;
+	private String unity;
 	
 	public Ingredient (){
 		
@@ -22,5 +24,21 @@ public class Ingredient {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public float getQauntity() {
+		return qauntity;
+	}
+
+	public void setQauntity(float qauntity) {
+		this.qauntity = qauntity;
+	}
+
+	public String getUnity() {
+		return unity;
+	}
+
+	public void setUnity(String unity) {
+		this.unity = unity;
 	}
 }
