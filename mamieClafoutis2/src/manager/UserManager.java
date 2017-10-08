@@ -11,6 +11,7 @@ public class UserManager {
 	private static String queryById = "select * from utilisateur where id = ?";
 	private static String queryInsert = "insert into utilisateur ('id', 'nom', 'prenom', 'etablisement_id', 'role_id', 'userName', 'password') values(?,?,?,?,?,?,?)";
 	private static String queryUpdate = "update utilisateur set id = ?, nom = ?, prenom = ?, etablisement_id = ?, role_id = ?, userName = ?, password = ?";
+	private static String queryByNameUser = "select * from utilisateur where username=?";
 
 	public static User getUser(String login, String pwd) {
 		User user = null;
@@ -30,7 +31,7 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
-					
+
 				}
 		}
 
@@ -45,14 +46,14 @@ public class UserManager {
 		return user;
 	}
 
-	public static boolean verifyUser(String login, String pwd) {
+	static public boolean verifyUser(String login, String pwd) {
 		if (getUser(login, pwd) != null)
 			return true;
 
 		return false;
 	}
 
-	public static User getAllInformationById(int id) {
+	static public User getAllInformationById(int id) {
 		User user = null;
 
 		try {
@@ -70,7 +71,7 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
-					
+
 				}
 		}
 
@@ -97,8 +98,8 @@ public class UserManager {
 			ps.setInt(5, newUser.getRoleId());
 			ps.setString(6, newUser.getUsername());
 			int nbretour = ps.executeUpdate();
-			if(nbretour>0){
-				retour=true;
+			if (nbretour > 0) {
+				retour = true;
 			}
 		}
 
@@ -143,8 +144,23 @@ public class UserManager {
 		return retour;
 	}
 
-	
 	// get user by id etablishment
-	//get all user
-	//get user by role
+	// get all user
+	// get user by role
+	// get user by name User
+
+	static public boolean getByNameUser(String login) {
+		boolean retour = false;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryByNameUser);
+			ps.setString(1, login);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst())
+				retour = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return retour;
+	}
 }

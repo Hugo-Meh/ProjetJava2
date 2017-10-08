@@ -1,46 +1,162 @@
 package manager;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-
 import entities.Sales;
+import service.ConnexionBDD;
 
 public class SalesManager {
-	
+
 	// les attributs static private String query
-	
-	public static ArrayList<Sales> getAll(){
-		return null;
-	}
-	
-	
-	// on passe un tableau qui prend une valeur ou plus car on veut permettre a l'admin d'afficher un ou plusieur etablissements
-	// on peut ajouter les orderBy Date ou produit cette methode affiche toutes les ventes de chaque jour
-	public static ArrayList<Sales> getByIdEtablishement(int[] idEtablishement, Date dateFirst,Date dateEnd){
-		
-		return null;
-	}
-	// une methode qui affiche un groupement de vente pour un produit donnée durant une date donnée 
-	public static ArrayList<Sales> getStatByEtablishement(int[] idEtablishement, Date dateFirst,Date dateEnd){
-		
-		return null;
-	}
-	// l'insertion des ventes des vendeur si le produit n'est pas existant pendant l'heure qui precede
-	public static boolean Insert(int idProduct,Sales sales){
-		return false;
+	private static String queryAll = "select V.date_horaire as date,U.id as idUser,U.nom+ ' 'U.prenom as nom,P.id as idProduit,"
+			+ "V.quantite as quantite,E.nom as nomEtab from ventes V inner join produit P on P.id=V.produit.id inner join utilisateur U on U.id=V.utilisateur_id"
+			+ "inner join etablissement E on U.etablissement_id=E.id";
+	private static String queryByIdEtab = "select V.date_horaire as date,U.id as idUser,U.nom+ ' 'U.prenom as nom,P.id as idProduit,"
+			+ "V.quantite as quantite,E.nom as nomEtab from ventes V inner join produit P on P.id=V.produit.id inner join utilisateur U on U.id=V.utilisateur_id"
+			+ "inner join etablissement E on U.etablissement_id=E.id where E.id=? and V.date_horaire between(?,?)";
+
+	private static String queryInsert = "insert into ventes ('date_horaire','utilisateur_id','quantite','produit_id') values(?,?,?,?)";
+	private static String queryTest = "select * from ventes where date_horaire between ( NOW(),DATE_SUB(NOW(),INTERVAL 1 HOUR))"
+			+ "and produit_id=? and utilisateur_id=?";
+	private static String queryUpdate = " update ventes set quantite+=? where date_horaire=?";
+
+	public static ArrayList<Sales> getAll() {
+		ArrayList<Sales> sales = null;
+
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryAll);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst()) {
+				sales = new ArrayList<>();
+				while (rs.next()) {
+					Sales s = new Sales();
+					s.setDate(rs.getDate("date"));
+					s.setUserId(rs.getInt("idUser"));
+					s.setUsername(rs.getString("nom"));
+					s.setProductId(rs.getInt("idProduit"));
+					s.setQuantity(rs.getInt("quantite"));
+					s.setEstablishmentName(rs.getString("nomEtab"));
+					sales.add(s);
+				}
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return sales;
 	}
 
-// update d'une vente existante si le produit a été entrer par un utilisateur donnée pendant lheure qui précède
-	
-	public static boolean Update(int idVente,Sales sales){
-		return false;
+	// on passe un tableau qui prend une valeur ou plus car on veut permettre a
+	// l'admin d'afficher un ou plusieur etablissements
+	// on peut ajouter les orderBy Date ou produit cette methode affiche toutes
+	// les ventes de chaque jour
+	public static ArrayList<Sales> getByIdEtablishement(int[] idEtablishement, Date dateFirst, Date dateEnd) {
+		ArrayList<Sales> sales = null;
+
+		try {
+			for (int i = 0; i < idEtablishement.length; i++) {
+				PreparedStatement ps = ConnexionBDD.getPs(queryByIdEtab);
+				ps.setInt(1, idEtablishement[i]);
+				ps.setDate(2, (java.sql.Date) dateFirst);
+				ps.setDate(3, (java.sql.Date) dateEnd);
+				ResultSet rs = ps.executeQuery();
+				if (rs.isBeforeFirst()) {
+					if (sales == null)
+						sales = new ArrayList<>();
+					while (rs.next()) {
+						Sales s = new Sales();
+						s.setDate(rs.getDate("date"));
+						s.setUserId(rs.getInt("idUser"));
+						s.setUsername(rs.getString("nom"));
+						s.setProductId(rs.getInt("idProduit"));
+						s.setQuantity(rs.getInt("quantite"));
+						s.setEstablishmentName(rs.getString("nomEtab"));
+						sales.add(s);
+					}
+
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return sales;
 	}
-	
-	// verifie si un produit donnée a été ajouter a dans la derniere heure s'il existe on appelle update si -1 on appelle insert
-	public static int isAddedInLastHour(int idProduct,int idUser){
-		int idVente=-1;
-		return idVente;
+
+	// une methode qui affiche un groupement de vente pour un produit donnée
+	// durant une date donnée
+	// a voir apres j'ai oublie a quoi sert :)
+	public static ArrayList<Sales> getStatByEtablishement(int[] idEtablishement, Date dateFirst, Date dateEnd) {
+
+		return null;
 	}
-	
-	
+
+	// l'insertion des ventes des vendeur si le produit n'est pas existant
+	// pendant l'heure qui precede
+	public static boolean Insert(Sales sales) {
+		boolean retour = false;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
+			ps.setInt(2, sales.getUserId());
+			ps.setInt(3, sales.getQuantity());
+			ps.setInt(4, sales.getProductId());
+			if (ps.executeUpdate() > 0)
+				retour = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return retour;
+	}
+
+	// update d'une vente existante si le produit a été entrer par un
+	// utilisateur donnée pendant lheure qui précède
+
+	public static boolean Update(Date date, Sales sales) {
+		boolean retour = false;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryUpdate);
+			ps.setInt(1, sales.getQuantity());
+			ps.setTimestamp(2, (Timestamp) date);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return retour;
+	}
+
+	// verifie si un produit donnée a été ajouter a dans la derniere heure s'il
+	// existe on appelle update si -1 on appelle insert
+	public static Date isAddedInLastHour(int idProduct, int idUser) {
+		Date date = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryTest);
+			ps.setInt(1, idProduct);
+			ps.setInt(1, idUser);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst() && rs.next())
+				date = rs.getDate("date_horaire");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return date;
+	}
 }
