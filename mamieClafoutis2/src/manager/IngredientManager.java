@@ -58,8 +58,8 @@ public class IngredientManager {
 		boolean retour = false;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryUpdateIngredientByIDProduct);
-			// ps.setFloat(1, ingerdient.getQte());
-			// ps.setString(2, ingerdient.getUnite());
+			ps.setFloat(1, ingerdient.getQauntity());
+			ps.setString(2, ingerdient.getUnity());
 			ps.setInt(3, idProduct);
 			int nbUpdate = ps.executeUpdate();
 			if (nbUpdate > 0)

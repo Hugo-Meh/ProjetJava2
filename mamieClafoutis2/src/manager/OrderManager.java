@@ -52,8 +52,8 @@ public class OrderManager {
 		ArrayList<Order> order = null;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryByIntervalDate);
-			ps.setDate(1, (java.sql.Date) dateStart);
-			ps.setDate(2, (java.sql.Date) dateEnd);
+			ps.setTimestamp(1, (java.sql.Timestamp) dateStart);
+			ps.setTimestamp(2, (java.sql.Timestamp) dateEnd);
 			ResultSet result = ps.executeQuery();
 			if (result.isBeforeFirst())
 				order = new ArrayList<>();
@@ -88,12 +88,13 @@ public class OrderManager {
 		try {
 			for (int i : id_etablishment) {
 				PreparedStatement ps = ConnexionBDD.getPs(queryCostumerByIntervalDate);
-				ps.setDate(1, (java.sql.Date) dateStart);
-				ps.setDate(2, (java.sql.Date) dateEnd);
+				ps.setTimestamp(1, (java.sql.Timestamp) dateStart);
+				ps.setTimestamp(2, (java.sql.Timestamp) dateEnd);
 				ps.setInt(3, i);
 				ResultSet result = ps.executeQuery();
 				if (result.isBeforeFirst())
-					order = new ArrayList<>();
+					if (order == null)
+						order = new ArrayList<>();
 				while (result.next()) {
 					Order o = new Order();
 					o.setId(result.getInt("id"));
@@ -131,8 +132,8 @@ public class OrderManager {
 		try {
 
 			PreparedStatement ps = ConnexionBDD.getPs(queryByIdUserIntoDate);
-			ps.setDate(1, (java.sql.Date) dateStart);
-			ps.setDate(2, (java.sql.Date) dateEnd);
+			ps.setTimestamp(1, (java.sql.Timestamp) dateStart);
+			ps.setTimestamp(2, (java.sql.Timestamp) dateEnd);
 			ps.setInt(3, user);
 			ResultSet result = ps.executeQuery();
 			if (result.isBeforeFirst())
@@ -240,7 +241,7 @@ public class OrderManager {
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(Insert);
 			ps.setInt(1, idUser);
-			ps.setDate(2, (java.sql.Date) order.getDate());
+			ps.setTimestamp(2, (java.sql.Timestamp) order.getDate());
 			ps.setBoolean(3, false);
 			if (ps.executeUpdate() > 0) {
 				ResultSet rs = ps.getGeneratedKeys();
@@ -256,7 +257,7 @@ public class OrderManager {
 
 	// methode qui retourne le dernier id de la commande inserer un id sera
 	// utilise pour la table ligne de commande
-
+	// la methode getGeneratedKeys a l'insertion retour l'id gerenre pour la ligne inserer
 	public static int getLastIdByUser(int idUser) {
 		return 0;
 	}
