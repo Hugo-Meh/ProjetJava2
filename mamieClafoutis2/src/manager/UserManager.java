@@ -45,14 +45,14 @@ public class UserManager {
 		return user;
 	}
 
-	public boolean verifyUser(String login, String pwd) {
+	public static boolean verifyUser(String login, String pwd) {
 		if (getUser(login, pwd) != null)
 			return true;
 
 		return false;
 	}
 
-	public User getAllInformationById(int id) {
+	public static User getAllInformationById(int id) {
 		User user = null;
 
 		try {

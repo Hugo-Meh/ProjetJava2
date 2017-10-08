@@ -20,7 +20,7 @@ public class OrderManager {
 		return null;
 	}
 
-	// retourner toutes les commandes validée par une succursale pour un temps
+	// retourner toutes les commandes validï¿½e par une succursale pour un temps
 	// donne
 	// une boucle sur laquery pour chaque valeur du tableau id_Etab
 	// les costumers sera une seule valeur l'id de leur etablissement et ladmin
@@ -33,7 +33,7 @@ public class OrderManager {
 		return null;
 	}
 
-	// retournée toutes les commandes preparer par l'atelier pour valider la
+	// retournï¿½e toutes les commandes preparer par l'atelier pour valider la
 	// livraison
 	// on peut mettre en parametre les date our filtrer ou directement afficher
 	// que les commande de la semaine qui doivent etre preparer
@@ -44,10 +44,10 @@ public class OrderManager {
 		return null;
 	}
 
-	// retourne les commande d'un user donnée pour un interval de temps donnée
+	// retourne les commande d'un user donnï¿½e pour un interval de temps donnï¿½e
 	// pour les costumers puissent voir leur commandes en cours pour pouvoir
 	// modifier
-	public static ArrayList<Order> getByIdUser(int User, Date dateStart, Date dateEndF) {
+	public static ArrayList<Order> getByIdUser(int User, Date dateStart, Date dateEnd) {
 		return null;
 	}
 
