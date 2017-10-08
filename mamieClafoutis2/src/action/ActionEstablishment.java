@@ -34,4 +34,16 @@ public class ActionEstablishment {
 			request.setAttribute(C.EstablishmentList, establishments);
 		}
 	}
+	
+	public static void insert (Establishment etab){
+		if (etab != null){
+			EstablishmentManager.Insert(etab);
+		}
+	}
+	
+	public static void update (Establishment etab){
+		if (etab != null){
+			EstablishmentManager.Update(etab);
+		}
+	}
 }
