@@ -3,7 +3,7 @@ package entities;
 public class Establishment {
 	private int id;
 	private String name;
-	private String adresse;
+	private int idAdress;
 	private String tel;
 	private int type;
 
@@ -16,10 +16,7 @@ public class Establishment {
 		return this.name;
 	}
 
-	public String getAdresse() {
-		return this.adresse;
-	}
-
+	
 	public String getTel() {
 		return this.tel;
 	}
@@ -37,15 +34,19 @@ public class Establishment {
 		this.name = nom;
 	}
 
-	public void setAdresse(String adresse) {
-		this.adresse = adresse;
-	}
-
 	public void setTel(String tel) {
 		this.tel = tel;
 	}
 
 	public void setType(int type) {
 		this.type = type;
+	}
+
+	public int getIdAdress() {
+		return idAdress;
+	}
+
+	public void setIdAdress(int idAdress) {
+		this.idAdress = idAdress;
 	}
 }

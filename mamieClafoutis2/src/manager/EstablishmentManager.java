@@ -11,8 +11,8 @@ public class EstablishmentManager {
 	private static String queryAll = "select * from etablisement";
 	private static String queryUser = "select etablisement_id from utilisateur where id = ?";
 	private static String queryType = "select * from etablisement where type_id = (select id from type where denomination = ?)";
-	private static String queryInsert = "insert into etablisement ('id', 'name', 'adresse', 'tel', 'type_id') values(?,?,?,?,?)";
-	private static String queryUpdate = "update etablisement set id = ?, name = ?, adresse = ?, tel = ?, type_id = ? where id = ?";
+	private static String queryInsert = "insert into etablisement ('id', 'name', 'Adresse_id', 'tel', 'type_id') values(?,?,?,?,?)";
+	private static String queryUpdate = "update etablisement set id = ?, name = ?, Adresse_id = ?, tel = ?, type_id = ? where id = ?";
 
 	public static ArrayList<Establishment> getAll() {
 		ArrayList<Establishment> establishment = null;
@@ -26,7 +26,7 @@ public class EstablishmentManager {
 					Establishment e = new Establishment();
 					e.setId(result.getInt("id"));
 					e.setName(result.getString("name"));
-					e.setAdresse(result.getString("adresse"));
+					e.setIdAdress(result.getInt("Adresse_id"));
 					e.setTel(result.getString("tel"));
 					e.setType(result.getInt("type_id"));
 					establishment.add(e);
@@ -61,7 +61,7 @@ public class EstablishmentManager {
 				Establishment e = new Establishment();
 				e.setId(result.getInt("id"));
 				e.setName(result.getString("name"));
-				e.setAdresse(result.getString("adresse"));
+				e.setIdAdress(result.getInt("Adresse_id"));
 				e.setTel(result.getString("tel"));
 				e.setType(result.getInt("type_id"));
 
@@ -95,7 +95,7 @@ public class EstablishmentManager {
 				Establishment e = new Establishment();
 				e.setId(result.getInt("id"));
 				e.setName(result.getString("name"));
-				e.setAdresse(result.getString("adresse"));
+				e.setIdAdress(result.getInt("Adresse_id"));
 				e.setTel(result.getString("tel"));
 				e.setType(result.getInt("type_id"));
 				establishment.add(e);
@@ -120,7 +120,7 @@ public class EstablishmentManager {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
 			ps.setInt(1, etab.getId());
 			ps.setString(2, etab.getName());
-			ps.setString(3, etab.getAdresse());
+			ps.setInt(3, etab.getIdAdress());
 			ps.setString(4, etab.getTel());
 			ps.setInt(5, etab.getType());
 			int nbretour = ps.executeUpdate();
@@ -148,7 +148,7 @@ public class EstablishmentManager {
 			PreparedStatement ps = ConnexionBDD.getPs(queryUpdate);
 			ps.setInt(1, etab.getId());
 			ps.setString(2, etab.getName());
-			ps.setString(3, etab.getAdresse());
+			ps.setInt(3, etab.getIdAdress());
 			ps.setString(4, etab.getTel());
 			ps.setInt(5, etab.getType());
 			nbrUpdate = ps.executeUpdate();
@@ -167,4 +167,5 @@ public class EstablishmentManager {
 
 		return retour;
 	}
+
 }
