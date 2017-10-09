@@ -94,8 +94,8 @@ public class SalesManager {
 		return sales;
 	}
 
-	// une methode qui affiche un groupement de vente pour un produit donnée
-	// durant une date donnée
+	// une methode qui affiche un groupement de vente pour un produit donnï¿½e
+	// durant une date donnï¿½e
 	// a voir apres j'ai oublie a quoi sert :)
 	public static ArrayList<Sales> getStatByEtablishement(int[] idEtablishement, Date dateFirst, Date dateEnd) {
 
@@ -122,8 +122,8 @@ public class SalesManager {
 		return retour;
 	}
 
-	// update d'une vente existante si le produit a été entrer par un
-	// utilisateur donnée pendant lheure qui précède
+	// update d'une vente existante si le produit a ï¿½tï¿½ entrer par un
+	// utilisateur donnï¿½e pendant lheure qui prï¿½cï¿½de
 
 	public static boolean Update(Date date, Sales sales) {
 		boolean retour = false;
@@ -140,7 +140,7 @@ public class SalesManager {
 		return retour;
 	}
 
-	// verifie si un produit donnée a été ajouter a dans la derniere heure s'il
+	// verifie si un produit donnï¿½e a ï¿½tï¿½ ajouter a dans la derniere heure s'il
 	// existe on appelle update si -1 on appelle insert
 	public static Date isAddedInLastHour(int idProduct, int idUser) {
 		Date date = null;
