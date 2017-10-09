@@ -37,6 +37,7 @@ public class CategoryManager {
 
 		finally {
 			ConnexionBDD.closeConnection();
+			System.out.println(categorie);
 		}
 		return categorie;
 	}

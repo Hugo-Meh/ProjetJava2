@@ -13,7 +13,9 @@ public class ActionCategory {
 	public static void displayAll(HttpServletRequest request){
 		ArrayList <Category> categories = null;
 		categories = CategoryManager.getAll();
+		System.out.println(categories);
 		if (categories != null){
+			System.out.println("je suis renté ! héhé");
 			request.setAttribute(C.CategoryList, categories);
 		}
 	}

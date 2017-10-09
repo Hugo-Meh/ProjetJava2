@@ -14,7 +14,7 @@
 			%>
 			<li><a href="SignIn.jsp">Connexion</a></li>
 			<li><a href="SignUp.jsp">Inscription</a></li>
-			<li><a href="Product.jsp">Produits</a></li>
+			<li><a href="ServeletShowProduct">Produits</a></li>
 			<%
 				} else {
 					if (user.getRoleId() == 5) {
