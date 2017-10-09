@@ -72,8 +72,7 @@ DROP TABLE IF EXISTS `mydb`.`etablissement` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`etablissement` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL DEFAULT 'Mami Clafoutis',
-  `adresse` VARCHAR(255) NOT NULL,
-  `tel` VARCHAR(12) NOT NULL,
+  `tel` VARCHAR(255) NOT NULL,
   `type_id` INT(11) NOT NULL,
   `Adresse_id` INT(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -171,9 +170,9 @@ DROP TABLE IF EXISTS `mydb`.`ingredient` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`ingredient` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `denomination` VARCHAR(255) NOT NULL,
+  `denomination` VARCHAR(255) NULL,
   `quantite` INT(11) NOT NULL,
-  `unite_ingredient` VARCHAR(255) NOT NULL,
+  `unite_ingredient` VARCHAR(255) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `denomination_UNIQUE` (`denomination` ASC),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC))
@@ -190,12 +189,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`produit` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `nom` VARCHAR(255) NOT NULL,
   `categorie_id` INT(11) NOT NULL,
-  `description` VARCHAR(255) NOT NULL,
-  `prix` FLOAT NOT NULL,
+  `description` VARCHAR(255) NOT NULL DEFAULT 'Pas de description',
+  `prix` FLOAT NULL,
   `url_image` VARCHAR(255) NULL DEFAULT NULL,
-  `estvisible` TINYINT(1) NOT NULL,
+  `estvisible` TINYINT(1) NOT NULL DEFAULT 1,
   `reference` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
+   `poid` float DEFAULT NULL,
+  `unite` varchar(45) DEFAULT NULL,
+   PRIMARY KEY (`id`),
   UNIQUE INDEX `idproduit_UNIQUE` (`id` ASC),
   INDEX `fk_produit_categorie1_idx` (`categorie_id` ASC),
   CONSTRAINT `fk_produit_categorie1`
