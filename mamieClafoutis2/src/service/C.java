@@ -16,4 +16,7 @@ public class C {
 	
 	public static final String EstablishmentList = "MyEstablismentList";
 	public static final String Establisment = "MyEstablishment";
+	
+	public static final String SaleList = "MySaleList";
+	public static final String Sale = "MySale";
 }
