@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="HTML/header.jsp"></jsp:include>
 <main>
 <form class="w3-container" action="ServletInscription" method="post">
 		<fieldset>
@@ -19,8 +20,6 @@
 			
 			<label for="login">confirmation Mot de passe</label>
 			<input type="text" id="password"/>
-			
-			
 		</fieldset>
 	</form>
 </main>

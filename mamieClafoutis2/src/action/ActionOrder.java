@@ -44,9 +44,9 @@ public class ActionOrder {
 			}
 	}
 	
-	public static void Insert(Order anOrder){
+	public static void Insert(int id, Order anOrder){
 		if (anOrder != null){
-			OrderManager.Insert(anOrder);
+			OrderManager.Insert(id,anOrder);
 		}
 	}
 }
