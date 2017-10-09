@@ -8,19 +8,28 @@
 <title>Accueil</title>
 </head>
 <body>
-header
+<jsp:include page="HTML/header.jsp"></jsp:include>
 <main>
-	
-	<form class="w3-container" action="ServletConnexion" method="post">
-		<fieldset>
-			<legend>Inscription</legend>		
-			<label for="login">Identifiant</label>
-			<input type="text" id="Login"/>
-			
-			<label for="login">Mot de passe</label>
-			<input type="text" id="password"/>	
-		</fieldset>
-	</form>
+	<h1>Bienvenue chez Mamie Clafoutis</h1>
+	<img src="Image/Logo/mamieclafoutis_logo.png"/>
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis 
+	varius aliquam. Morbi ac convallis nunc. Vestibulum rutrum aliquet luctus. 
+	Phasellus sed mi auctor magna tincidunt egestas. Maecenas aliquet placerat diam 
+	in tempor. Pellentesque ultrices quam et metus malesuada ultricies. Maecenas eu 
+	posuere lectus. Ut eleifend sed dolor non viverra. Nam tempus sem dui, at malesuada 
+	justo condimentum eu. Integer non ultrices arcu, sed scelerisque enim.
+	 Aliquam bibendum convallis libero, sed molestie metus efficitur varius. 
+	 Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
+	  turpis egestas. Suspendisse tristique facilisis massa, sit amet hendrerit quam.
+	   Curabitur ut nunc urna. Proin tristique purus ac est tempus, non condimentum 
+	   justo porttitor. Nulla vitae gravida dui.
+
+	Phasellus accumsan odio et erat malesuada, eget lacinia risus ornare. 
+	Fusce eleifend, sapien et facilisis rutrum, metus odio pellentesque turpis, 
+	vitae placerat elit felis eu tellus. Nullam fringilla tempus pharetra. 
+	Vestibulum suscipit egestas tempus. Aliquam rutrum sodales placerat. 
+	Vestibulum egestas tellus quam, vel ornare enim semper non. Aliquam nec 
+	scelerisque nulla.</p>
 </main>
 </body>
 </html>
