@@ -51,8 +51,8 @@ public class ServletSignUp extends HttpServlet {
 			throws ServletException, IOException {
 		boolean testSignup = false;
 		User newUser=null;
-		String submit = request.getParameter("signup");
-		if (submit.equals("Sign Up"))
+		String submit = request.getParameter("SignUp");
+		if (submit.equals("S'inscrire"))
 
 		{
 			String nom = request.getParameter("nom");
@@ -90,8 +90,8 @@ public class ServletSignUp extends HttpServlet {
 					
 					+ "</body>\r\n" + "</html>";	
 			
-			GestionMail.sendEmail(messageToSend, to, sujet);
-			request.getRequestDispatcher("/WEB-INF/validateSignUp.html").forward(request, response);
+			//GestionMail.sendEmail(messageToSend, to, sujet);
+			//request.getRequestDispatcher("/WEB-INF/validateSignUp.html").forward(request, response);
 			
 		} else {
 			request.setAttribute(C.ResponseSignUp, newUser.getUsername() + "   est dejà utilisé");

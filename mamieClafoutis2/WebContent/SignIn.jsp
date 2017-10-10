@@ -4,6 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" type="text/css" href="CSS/main.css">
 <title>Authentifiaction</title>
 </head>
@@ -22,6 +23,8 @@
 				
 				<label for="radio-remember">Se souvenir de moi</label>
 				<input type="radio" value="yes" name="remember" id="radio-remember">
+				
+				<input class="w3-button" value="Se connecter" type="submit">
 			</fieldset>
 		</form>
 	</div>

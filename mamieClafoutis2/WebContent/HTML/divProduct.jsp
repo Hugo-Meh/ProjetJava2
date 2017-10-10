@@ -2,6 +2,7 @@
 <%@ page import="service.C" %>
 <%@page import="java.util.ArrayList" %>
 <%@page import="entities.Category"%>
+<%@page import="entities.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
@@ -20,4 +21,26 @@ categorieName = categoriesTab.get(i).getNom();
     	<p><strong>Categorie:</strong><%= categorieName %></p>
     	<p><strong>nom:</strong><%= aProduct.getName() %></p>
     	<p>Short description</p>
+    	<%
+    	User user = (User)request.getAttribute(C.User);
+    	if(user.getId() == 1){
+    	%>	
+    	
+    	%>
+    	<p>Visible : <% if(aProduct.isVisible()){
+    		%>
+    		oui
+    	<%	
+    	}
+    	else{
+    	%>
+    		non
+    	<%	
+    	}
+    	%>
+    	</p>
+    	<button type="button"><a href="ServeletModifyProduct"></a></button>
+    	<%
+    	}
+    	%>
     </div>

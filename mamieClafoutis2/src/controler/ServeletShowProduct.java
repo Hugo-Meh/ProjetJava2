@@ -29,6 +29,7 @@ public class ServeletShowProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String filter = request.getParameter("categorie");
 		if(filter == null || filter == ""){
 			ActionCategory.displayAll(request);

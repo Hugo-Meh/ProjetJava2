@@ -20,12 +20,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<jsp:include page="HTML/header.jsp"></jsp:include>
+	<div class="wrapper">
 	<main>
 	<div><%=(error_message != null ? error_message : "")%></div>
 	<div>
-		<form class="w3-container" action="signUp" method="post">
+		<form class="form" action="signUp" method="post">
 			<fieldset>
 				<legend>Inscription</legend>
 
@@ -50,7 +50,7 @@
 					<option value="<%=r.getId()%>"><%=r.getName()%></option>
 					<%
 						}
-						}
+					}
 					%>
 					
 				</select> <label for="nom">Nom :</label> <input type="text" id="nom"
@@ -60,10 +60,11 @@
 					 <label for="pwd">Mot de passe :</label> <input
 					type="password" id="pwd" name="pwd" required /> <label for="pwd">confirmation
 					Mot de passe :</label> <input type="password" id="pwd" name="pwd1" required />
-				<input type="submit" id="sub" name="signup" value="Sign Up" required />
+				<input class="w3-button" type="submit" id="sub" name="SignUp" value="S'inscrire" required />
 			</fieldset>
 		</form>
 		</div>
 	</main>
+	</div>
 </body>
 </html>
