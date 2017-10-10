@@ -19,6 +19,9 @@
 			
 				<label for="login">Mot de passe</label>
 				<input type="password" id="password" name="pwd"/>	
+				
+				<label for="radio-remember">Se souvenir de moi</label>
+				<input type="radio" value="yes" name="remember" id="radio-remember">
 			</fieldset>
 		</form>
 	</div>

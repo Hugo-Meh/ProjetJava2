@@ -29,10 +29,19 @@ public class ServeletShowProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ActionCategory.displayAll(request);
-		ActionProduct.displayAll(request);
-		System.out.println("hello");
-		request.getRequestDispatcher("Product.jsp").forward(request, response);
+		String filter = request.getParameter("categorie");
+		if(filter == null || filter == ""){
+			ActionCategory.displayAll(request);
+			ActionProduct.displayAll(request);
+			request.getRequestDispatcher("Product.jsp").forward(request, response);
+		}
+		
+		else{
+			int idCat = Integer.parseInt(filter);
+			ActionCategory.displayAll(request);
+			ActionProduct.displayProductsByCategorieId(idCat, request);
+			request.getRequestDispatcher("Product.jsp").forward(request, response);
+		}
 	}
 
 	/**

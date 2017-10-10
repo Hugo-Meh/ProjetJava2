@@ -14,8 +14,8 @@ while (i<categoriesTab.size() && aProduct.getIdCategroy() != categoriesTab.get(i
 };
 categorieName = categoriesTab.get(i).getNom();
 %>
-    <div class="product">
-    	<img alt="product" src="Image/<%%>">
+    <div class="product w3-card-4">
+    	<img alt="product" src="Image/ImageProduit/pain.jpg">
     	
     	<p><strong>Categorie:</strong><%= categorieName %></p>
     	<p><strong>nom:</strong><%= aProduct.getName() %></p>

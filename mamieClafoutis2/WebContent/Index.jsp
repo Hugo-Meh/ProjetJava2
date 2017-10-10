@@ -4,14 +4,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" type="text/css" href="CSS/main.css">
 <title>Accueil</title>
 </head>
 <body>
 <jsp:include page="HTML/header.jsp"></jsp:include>
 <main>
+<div class="wrapper">
 	<h1>Bienvenue chez Mamie Clafoutis</h1>
-	<img src="Image/Logo/mamieclafoutis_logo.png"/>
+	<img id="logo-grd"src="Image/Logo/mamieclafoutis_logo.png" alt="logo mamieclafoutis grand"/>
 	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent venenatis 
 	varius aliquam. Morbi ac convallis nunc. Vestibulum rutrum aliquet luctus. 
 	Phasellus sed mi auctor magna tincidunt egestas. Maecenas aliquet placerat diam 
@@ -30,6 +31,7 @@
 	Vestibulum suscipit egestas tempus. Aliquam rutrum sodales placerat. 
 	Vestibulum egestas tellus quam, vel ornare enim semper non. Aliquam nec 
 	scelerisque nulla.</p>
+</div>
 </main>
 </body>
 </html>
