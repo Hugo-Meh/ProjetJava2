@@ -4,21 +4,24 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="CSS/main.css">
+<title>Authentifiaction</title>
 </head>
 <body>
 <jsp:include page="HTML/header.jsp"></jsp:include>
 <main>
-	<form class="w3-container" action="ServletConnexion" method="post">
-		<fieldset>
-			<legend>Inscription</legend>		
-			<label for="login">Identifiant</label>
-			<input type="text" id="Login"/>
+	<div class="wrapper">
+		<form class="form" action="ServletConnexion" method="post">
+			<fieldset>
+				<legend>Authentifiaction</legend>		
+				<label for="login">Identifiant</label>
+				<input type="text" id="Login" name="identifiant"/>
 			
-			<label for="login">Mot de passe</label>
-			<input type="text" id="password"/>	
-		</fieldset>
-	</form>
+				<label for="login">Mot de passe</label>
+				<input type="password" id="password" name="pwd"/>	
+			</fieldset>
+		</form>
+	</div>
 </main>
 </body>
 </html>

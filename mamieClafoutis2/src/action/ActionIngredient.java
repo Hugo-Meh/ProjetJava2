@@ -41,9 +41,9 @@ public class ActionIngredient {
 		}
 	}
 	
-	public static void uptdateIngredientByIdProduct(int id,Ingredient anIngredient){
+	public static void uptdateIngredientByIdProduct(Ingredient anIngredient){
 		if (anIngredient != null /*ajouter le empty requete product*/){
-			IngredientManager.UpdateIngeredientByIdProduct(id, anIngredient);
+			IngredientManager.UpdateIngeredientByIdProduct(anIngredient);
 		}
 	}
 	 /*verif pour le produit existant*/
