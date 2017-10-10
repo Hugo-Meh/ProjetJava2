@@ -49,9 +49,9 @@ public class ServletSignUp extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		boolean testSignup = false;
+		int idNewUser=-2 ;
 		User newUser=null;
-		String submit = request.getParameter("SignUp");
+		String submit = request.getParameter("signup");
 		if (submit.equals("S'inscrire"))
 
 		{
@@ -64,13 +64,14 @@ public class ServletSignUp extends HttpServlet {
 			String token = UUID.randomUUID().toString();
 			newUser = new User(nom, prenom, Integer.parseInt(etab), Integer.parseInt(role), mail, token, pwd);
 			if(ActionUser.verifyUserName(mail)){
-			testSignup = ActionUser.insertUser(request, response, newUser);
+				idNewUser = ActionUser.insertUser(request, response, newUser);
+				System.out.println("id user "+idNewUser);
 			}else{
-				testSignup=false;
+				idNewUser=-1;
 			}
 		}
 		
-		if (testSignup) {
+		if (idNewUser>0) {
 			String to = newUser.getUsername();
 			
 			String sujet ="validation d'inscription" ;
@@ -85,13 +86,12 @@ public class ServletSignUp extends HttpServlet {
 					+ "</head>\r\n"
 					+ "<body>\r\n"
 					+ "	<p style=\"color:red\">"
-					+ "Bonjour dis nous si ca marche encore"
+					+ "http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken()
 					+ "</p>\r\n"
-					
 					+ "</body>\r\n" + "</html>";	
-			
-			//GestionMail.sendEmail(messageToSend, to, sujet);
-			//request.getRequestDispatcher("/WEB-INF/validateSignUp.html").forward(request, response);
+			System.out.println("le lien "+"http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken());
+			GestionMail.sendEmail(messageToSend, to, sujet);
+			request.getRequestDispatcher("/WEB-INF/validateSignUp.html").forward(request, response);
 			
 		} else {
 			request.setAttribute(C.ResponseSignUp, newUser.getUsername() + "   est dejà utilisé");

@@ -36,7 +36,7 @@ public class UserManager {
 					user.setId(result.getInt("id"));
 					user.setLastName(result.getString("nom"));
 					user.setFirstName(result.getString("prenom"));
-					user.setEstablishmentId(result.getInt("etablisement_id"));
+					user.setEstablishmentId(result.getInt("etablissement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
 					user.setValid(result.getBoolean("isvalid"));
@@ -77,7 +77,7 @@ public class UserManager {
 					user.setId(result.getInt("id"));
 					user.setLastName(result.getString("nom"));
 					user.setFirstName(result.getString("prenom"));
-					user.setEstablishmentId(result.getInt("etablisement_id"));
+					user.setEstablishmentId(result.getInt("etablissement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
 					user.setValid(result.getBoolean("isvalid"));
@@ -98,8 +98,8 @@ public class UserManager {
 	}
 
 	// a l'inscription on appelle insert user
-	public static boolean Insert(User newUser) {
-		boolean retour = false;
+	public static int Insert(User newUser) {
+		int retour = -1;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
 			ps.setString(1, newUser.getLastName());
@@ -109,11 +109,13 @@ public class UserManager {
 			ps.setString(5, newUser.getUsername());
 			ps.setString(6, newUser.getPwd());
 			ps.setString(7, newUser.getToken());
-			
+
 			int nbretour = ps.executeUpdate();
 
 			if (nbretour > 0) {
-				retour = true;
+				ResultSet rs = ps.getGeneratedKeys();
+				if (rs.next())
+					retour = rs.getInt(1);
 			}
 		}
 
@@ -173,7 +175,7 @@ public class UserManager {
 				user.setId(result.getInt("id"));
 				user.setLastName(result.getString("nom"));
 				user.setFirstName(result.getString("prenom"));
-				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setEstablishmentId(result.getInt("etablissement_id"));
 				user.setRoleId(result.getInt("role_id"));
 				user.setUsername(result.getString("userName"));
 				user.setValid(result.getBoolean("isvalid"));
@@ -205,7 +207,7 @@ public class UserManager {
 				user.setId(result.getInt("id"));
 				user.setLastName(result.getString("nom"));
 				user.setFirstName(result.getString("prenom"));
-				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setEstablishmentId(result.getInt("etablissement_id"));
 				user.setRoleId(result.getInt("role_id"));
 				user.setUsername(result.getString("userName"));
 				user.setValid(result.getBoolean("isvalid"));
@@ -237,7 +239,7 @@ public class UserManager {
 				user.setId(result.getInt("id"));
 				user.setLastName(result.getString("nom"));
 				user.setFirstName(result.getString("prenom"));
-				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setEstablishmentId(result.getInt("etablissement_id"));
 				user.setRoleId(result.getInt("role_id"));
 				user.setUsername(result.getString("userName"));
 				user.setValid(result.getBoolean("isvalid"));
@@ -255,11 +257,11 @@ public class UserManager {
 	}
 
 	// get user by name User
-	public static ArrayList<User> getByName(int id) {
+	public static ArrayList<User> getByName(String name) {
 		ArrayList<User> users = null;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryByName);
-			ps.setInt(1, id);
+			ps.setString(1, name);
 			ResultSet result = ps.executeQuery();
 
 			if (result.isBeforeFirst())
@@ -269,7 +271,7 @@ public class UserManager {
 				user.setId(result.getInt("id"));
 				user.setLastName(result.getString("nom"));
 				user.setFirstName(result.getString("prenom"));
-				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setEstablishmentId(result.getInt("etablissement_id"));
 				user.setRoleId(result.getInt("role_id"));
 				user.setUsername(result.getString("userName"));
 				user.setValid(result.getBoolean("isvalid"));
@@ -305,6 +307,31 @@ public class UserManager {
 		return retour;
 	}
 
+	static public User getNameUser(String login) {
+		User user = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryByNameUser);
+			ps.setString(1, login);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst() && rs.next())
+				user = new User();
+			user.setId(rs.getInt("id"));
+			user.setLastName(rs.getString("nom"));
+			user.setFirstName(rs.getString("prenom"));
+			user.setEstablishmentId(rs.getInt("etablissement_id"));
+			user.setRoleId(rs.getInt("role_id"));
+			user.setUsername(rs.getString("userName"));
+			user.setValid(rs.getBoolean("isvalid"));
+			user.setToken(rs.getString("token"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return user;
+	}
+
 	// verifier un token s'il est correct ou nn
 	public static boolean validateToken(int idUser, String token) {
 		boolean retour = false;
@@ -331,7 +358,6 @@ public class UserManager {
 	// valider un utilisateur apres verification du token
 	public static boolean validateUser(int id) {
 		boolean retour = false;
-
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryValidateUser);
 			ps.setInt(1, id);
@@ -343,7 +369,6 @@ public class UserManager {
 		} finally {
 			ConnexionBDD.closeConnection();
 		}
-
 		return retour;
 	}
 }
