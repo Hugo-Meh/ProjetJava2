@@ -39,7 +39,7 @@ categorieName = categoriesTab.get(i).getNom();
     	}
     	%>
     	</p>
-    	<button type="button"><a href="ServeletModifyProduct"></a></button>
+    	<button type="button"><a href="ServeletModifyProduct?<%=C.Product%>=<%=aProduct.getId()%>"></a></button>
     	<%
     	}
     	%>

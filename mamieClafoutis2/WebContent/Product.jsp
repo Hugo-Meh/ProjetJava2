@@ -44,7 +44,7 @@
 		if(user != null && user.getId() == 1){
 		%>
 		<div id="addProduct">
-			<a href="ServeletAddProduct">Ajouter un Produit</a>
+			<a href="ServeletUpdateInsertProduct">Ajouter un Produit</a>
 		</div>
 		<%
 		}
