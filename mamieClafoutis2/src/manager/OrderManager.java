@@ -12,13 +12,13 @@ import service.ConnexionBDD;
 public class OrderManager {
 	// les attribut Private static String Query
 	private static String queryAll = "select * from commande";
-	private static String queryByIntervalDate = "select * from commande where date between (?,?) and valide=true";
-	private static String queryCostumerByIntervalDate = "select * from commande c inner join utilisateur u on u.id=c.utilisateur_id inner join etablissement e on u.etablissement_id=e.id  where c.date between (?,?) and e.id =?";
-	private static String queryByIdUserIntoDate = "select * from commande where date between (?,?) and utilisateur_id=?";
-	private static String queryFirstDate = "select top 1 date from commande order by date asc";
-	private static String queryLastDate = "select top 1 date from commande order by date desc";
-	private static String UpdateAdminValidate = "Update order set valide=? where id=?";
-	private static String Insert = "insert into commande ('utilisateur_id','date','valide') values (?,now(),?)";
+	private static String queryByIntervalDate = "select * from commande where date between ? and ? and valide=true";
+	private static String queryCostumerByIntervalDate = "select * from commande c inner join utilisateur u on u.id=c.utilisateur_id inner join etablissement e on u.etablissement_id=e.id  where c.date between ? and ?  and e.id =?";
+	private static String queryByIdUserIntoDate = "select * from commande where date between ? and ?  and utilisateur_id=?";
+	private static String queryFirstDate = "select min(date) from commande";
+	private static String queryLastDate = "select top max(date) from commande";
+	private static String UpdateAdminValidate = "Update commande set valide=? where id=?";
+	private static String Insert = "insert into commande ('utilisateur_id') values (?)";
 
 	public static ArrayList<Order> getAll() {
 		ArrayList<Order> order = null;
@@ -241,8 +241,6 @@ public class OrderManager {
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(Insert);
 			ps.setInt(1, idUser);
-			ps.setTimestamp(2, (java.sql.Timestamp) order.getDate());
-			ps.setBoolean(3, false);
 			if (ps.executeUpdate() > 0) {
 				ResultSet rs = ps.getGeneratedKeys();
 				if (rs.next())
@@ -251,13 +249,16 @@ public class OrderManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally {
+			ConnexionBDD.closeConnection();
 		}
 		return retour;
 	}
 
 	// methode qui retourne le dernier id de la commande inserer un id sera
 	// utilise pour la table ligne de commande
-	// la methode getGeneratedKeys a l'insertion retour l'id gerenre pour la ligne inserer
+	// la methode getGeneratedKeys a l'insertion retour l'id gerenre pour la
+	// ligne inserer
 	public static int getLastIdByUser(int idUser) {
 		return 0;
 	}

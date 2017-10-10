@@ -14,7 +14,7 @@ public class AdressManager {
 			+ "on  A.id=E.Adresse_id where E.id=?";
 	private static String insert = "insert into adresse ('numero_rue','nom_rue','ville','province','code_postal','pays')"
 			+ "values(?,?,?,?,?,?)";
-	private static String update = "update adresse set numero_rue=?, nom_rue=?,ville=?,province=?, code_postal=?pays=?";
+	private static String update = "update adresse set numero_rue=?, nom_rue=?,ville=?,province=?, code_postal=? , pays=? where id=?";
 
 	public static ArrayList<Adress> getAll() {
 		ArrayList<Adress> adress = null;
@@ -93,6 +93,8 @@ public class AdressManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
 		}
 
 		return retour;
@@ -109,12 +111,15 @@ public class AdressManager {
 			ps.setString(4, adress.getProvince());
 			ps.setString(5, adress.getCP());
 			ps.setString(6, adress.getCountry());
+			ps.setInt(7, adress.getId());
 			if (ps.executeUpdate() > 0)
 				retour = true;
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
 		}
 
 		return retour;

@@ -13,17 +13,17 @@ import service.ConnexionBDD;
 public class SalesManager {
 
 	// les attributs static private String query
-	private static String queryAll = "select V.date_horaire as date,U.id as idUser,U.nom+ ' 'U.prenom as nom,P.id as idProduit,"
-			+ "V.quantite as quantite,E.nom as nomEtab from ventes V inner join produit P on P.id=V.produit.id inner join utilisateur U on U.id=V.utilisateur_id"
+	private static String queryAll = "select V.date_horaire as date,U.id as idUser,CONCAT(U.nom,\"  \",U.prenom) as nom,P.id as idProduit,"
+			+ "V.quantite as quantite,E.name as nomEtab from ventes V inner join produit P on P.id=V.produit_id inner join utilisateur U on U.id=V.utilisateur_id"
 			+ "inner join etablissement E on U.etablissement_id=E.id";
-	private static String queryByIdEtab = "select V.date_horaire as date,U.id as idUser,U.nom+ ' 'U.prenom as nom,P.id as idProduit,"
-			+ "V.quantite as quantite,E.nom as nomEtab from ventes V inner join produit P on P.id=V.produit.id inner join utilisateur U on U.id=V.utilisateur_id"
-			+ "inner join etablissement E on U.etablissement_id=E.id where E.id=? and V.date_horaire between(?,?)";
+	private static String queryByIdEtab = "select V.date_horaire as date,U.id as idUser,CONCAT(U.nom,\"  \",U.prenom)  as nom,P.id as idProduit,"
+			+ "V.quantite as quantite,E.name as nomEtab from ventes V inner join produit P on P.id=V.produit_id inner join utilisateur U on U.id=V.utilisateur_id"
+			+ "inner join etablissement E on U.etablissement_id=E.id where E.id=? and V.date_horaire between ? and ?";
 
-	private static String queryInsert = "insert into ventes ('date_horaire','utilisateur_id','quantite','produit_id') values(?,?,?,?)";
-	private static String queryTest = "select * from ventes where date_horaire between ( NOW(),DATE_SUB(NOW(),INTERVAL 1 HOUR))"
+	private static String queryInsert = "insert into ventes ('utilisateur_id','quantite','produit_id') values(?,?,?)";
+	private static String queryTest = "select * from ventes where date_horaire between DATE_SUB(NOW(),INTERVAL 1 HOUR) and NOW() and produit_id=? and utilisateur_id=?"
 			+ "and produit_id=? and utilisateur_id=?";
-	private static String queryUpdate = " update ventes set quantite+=? where date_horaire=?";
+	private static String queryUpdate = " update ventes set quantite=quantite + ? where date_horaire=?";
 
 	public static ArrayList<Sales> getAll() {
 		ArrayList<Sales> sales = null;

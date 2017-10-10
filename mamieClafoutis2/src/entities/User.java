@@ -8,6 +8,8 @@ public class User {
 	private int establishmentId;
 	private int roleId;
 	private String username;
+	private boolean isValid;
+	private String token;
 	
 
 	// Getters
@@ -58,6 +60,22 @@ public class User {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+
+	public void setValid(boolean isValid) {
+		this.isValid = isValid;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 }

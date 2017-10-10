@@ -59,7 +59,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`type` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `denomination` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `idtype_UNIQUE` (`id` ASC))
+  UNIQUE INDEX `idtype_UNIQUE` (`id` ASC)),
+  UNIQUE INDEX `denomination_UNIQUE` (`denomination` ASC)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -121,6 +122,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`utilisateur` (
   `role_id` INT(11) NOT NULL,
   `userName` VARCHAR(255) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `token` VARCHAR(255) NOT NULL,
+  `isvalid` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `idUser_UNIQUE` (`id` ASC),
   UNIQUE INDEX `userName_UNIQUE` (`userName` ASC),
@@ -148,8 +151,8 @@ DROP TABLE IF EXISTS `mydb`.`commande` ;
 CREATE TABLE IF NOT EXISTS `mydb`.`commande` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `utilisateur_id` INT(11) NOT NULL,
-  `date` DATETIME NOT NULL,
-  `valide` TINYINT(1) NOT NULL DEFAULT '0',
+  `date` DATETIME NOT NULL default now(),
+  `valide` TINYINT(1) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   INDEX `fk_commande_utilisateur1_idx` (`utilisateur_id` ASC),
@@ -294,9 +297,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`recette` (
   `produit_id` INT(11) NOT NULL,
   `description` VARCHAR(255) NOT NULL,
   `date` DATETIME NOT NULL DEFAULT now(),
-  `date_modif` DATETIME NULL DEFAULT NULL,
+  `date_modif` DATETIME NULL DEFAULT now(),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `produit_id_UNIQUE` (`produit_id` ASC);
   INDEX `fk_recette_produit1` (`produit_id` ASC),
   CONSTRAINT `fk_recette_produit1`
     FOREIGN KEY (`produit_id`)
@@ -352,6 +356,17 @@ INSERT INTO `mydb`.`type` (`denomination`) VALUES ('Corporate');
 INSERT INTO `mydb`.`type` (`denomination`) VALUES ('Franchise');
 INSERT INTO `mydb`.`type` (`denomination`) VALUES ('Professionel');
 
+
+/*adresse*/
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('1291', ' avenue Van Horne', 'Outremont', 'Quebec', ' H2V 1K7', 'Canada');
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('105', 'Chemin de la Pointe Nord', 'Verdun', 'Quebec', 'H3E 0B5', 'Canada');
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('2660', 'rue Notre-Dame Ouest', 'Montréal', 'Quebec', 'H3J 1N7', 'Canada');
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('1602', 'rue Fleury Est', 'Montréal', 'Quebec', 'H2C 1S8', 'Canada');
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('4093', 'rue Molson', 'Montréal', 'Quebec', 'H1Y 3L1', 'Canada');
+INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('3660', 'rue Saint-Denis', 'Montréal', 'Quebec', 'H2X 3L7', 'Canada');
+
+
+
 /*etablissement*/
 INSERT INTO `mydb`.`etablissement` (`name`, `tel`, `type_id`, `Adresse_id`) VALUES ('Siege Social', 'indisponible', '1', '6');
 INSERT INTO `mydb`.`etablissement` (`name`, `tel`, `type_id`, `Adresse_id`) VALUES ('Saint-Denis', '(438) 380-5624', '2', '6');
@@ -368,15 +383,6 @@ INSERT INTO `mydb`.`role` (`denomination`) VALUES ('Chef Boulanger');
 INSERT INTO `mydb`.`role` (`denomination`) VALUES ('Gérant');
 INSERT INTO `mydb`.`role` (`denomination`) VALUES ('Cuisinier');
 INSERT INTO `mydb`.`role` (`denomination`) VALUES ('Vendeur');
-
-
-/*adresse*/
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('1291', ' avenue Van Horne', 'Outremont', 'Quebec', ' H2V 1K7', 'Canada');
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('105', 'Chemin de la Pointe Nord', 'Verdun', 'Quebec', 'H3E 0B5', 'Canada');
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('2660', 'rue Notre-Dame Ouest', 'Montréal', 'Quebec', 'H3J 1N7', 'Canada');
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('1602', 'rue Fleury Est', 'Montréal', 'Quebec', 'H2C 1S8', 'Canada');
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('4093', 'rue Molson', 'Montréal', 'Quebec', 'H1Y 3L1', 'Canada');
-INSERT INTO `mydb`.`adresse` (`numero_rue`, `nom_rue`, `ville`, `province`, `code_postal`, `pays`) VALUES ('3660', 'rue Saint-Denis', 'Montréal', 'Quebec', 'H2X 3L7', 'Canada');
 
 
 
