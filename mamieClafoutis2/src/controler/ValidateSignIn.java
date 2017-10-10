@@ -47,11 +47,11 @@ public class ValidateSignIn extends HttpServlet {
 			session.setAttribute(C.User, UserManager.getAllInformationById(userconnect.getId()));
 			System.out.println("votre connexion est confirmé");
 			if (remember != null && remember.equals("yes")) {
-				CookieManager.getCookie("remember", request);
 				CookieManager.setCookie(60 * 60 * 24, "remember", "checked", response);
 
 			} else {
-				CookieManager.supprimerCookie("remember", request, response);
+				if (CookieManager.getCookie("remember", request) != null)
+					CookieManager.supprimerCookie("remember", request, response);
 			}
 			url = "http://localhost:8080/mamieClafoutis/Index.jsp";
 		} else {
