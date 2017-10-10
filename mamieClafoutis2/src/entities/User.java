@@ -1,7 +1,7 @@
 package entities;
 
 public class User {
-	
+
 	private int id;
 	private String lastName;
 	private String firstName;
@@ -10,7 +10,24 @@ public class User {
 	private String username;
 	private boolean isValid;
 	private String token;
-	
+	private String pwd;
+
+	public User() {
+
+	}
+
+	public User(String lastName, String firstName, int establishmentId,
+			int roleId, String username, String token,
+			String pwd) {
+
+		this.lastName = lastName;
+		this.firstName = firstName;
+		this.establishmentId = establishmentId;
+		this.roleId = roleId;
+		this.username = username;
+		this.token = token;
+		this.pwd = pwd;
+	}
 
 	// Getters
 	public int getId() {
@@ -76,6 +93,14 @@ public class User {
 
 	public void setToken(String token) {
 		this.token = token;
+	}
+
+	public String getPwd() {
+		return pwd;
+	}
+
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
 	}
 
 }

@@ -11,8 +11,8 @@ import service.ConnexionBDD;
 public class UserManager {
 	private static String queryUser = "select * from utilisateur where userName = ? and password = ?";
 	private static String queryById = "select * from utilisateur where id = ?";
-	private static String queryInsert = "insert into utilisateur ('id', 'nom', 'prenom', 'etablisement_id', 'role_id', 'userName', 'password','token') values(?,?,?,?,?,?,?,?)";
-	private static String queryUpdate = "update utilisateur set id = ?, nom = ?, prenom = ?, etablisement_id = ?, role_id = ?, userName = ?, password = ?";
+	private static String queryInsert = "insert into utilisateur (nom, prenom, etablissement_id, role_id, userName,password,token) values(?,?,?,?,?,?,?)";
+	private static String queryUpdate = "update utilisateur set id = ?, nom = ?, prenom = ?, etablissement_id = ?, role_id = ?, userName = ?, password = ?";
 	private static String queryByNameUser = "select * from utilisateur where username=?";
 	private static String queryValidateUser = "update utilisateur set isvalid=true where id=?";
 	private static String queryTokenById = "select token from utilisateur where id=?";
@@ -102,13 +102,14 @@ public class UserManager {
 		boolean retour = false;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
-			ps.setInt(1, newUser.getId());
-			ps.setString(2, newUser.getLastName());
-			ps.setString(3, newUser.getFirstName());
-			ps.setInt(4, newUser.getEstablishmentId());
-			ps.setInt(5, newUser.getRoleId());
-			ps.setString(6, newUser.getUsername());
+			ps.setString(1, newUser.getLastName());
+			ps.setString(2, newUser.getFirstName());
+			ps.setInt(3, newUser.getEstablishmentId());
+			ps.setInt(4, newUser.getRoleId());
+			ps.setString(5, newUser.getUsername());
+			ps.setString(6, newUser.getPwd());
 			ps.setString(7, newUser.getToken());
+			
 			int nbretour = ps.executeUpdate();
 
 			if (nbretour > 0) {
@@ -287,14 +288,14 @@ public class UserManager {
 
 	// a l'inscription on test si l'email existe dans la base ou nn?
 
-	static public boolean getByNameUser(String login) {
-		boolean retour = false;
+	static public boolean VerifyNameUser(String login) {
+		boolean retour = true;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryByNameUser);
 			ps.setString(1, login);
 			ResultSet rs = ps.executeQuery();
 			if (rs.isBeforeFirst())
-				retour = true;
+				retour = false;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

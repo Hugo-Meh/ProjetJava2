@@ -59,8 +59,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`type` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `denomination` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `idtype_UNIQUE` (`id` ASC)),
-  UNIQUE INDEX `denomination_UNIQUE` (`denomination` ASC)
+  UNIQUE INDEX `idtype_UNIQUE` (`id` ASC),
+  UNIQUE INDEX `denomination_UNIQUE` (`denomination` ASC))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -300,7 +300,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`recette` (
   `date_modif` DATETIME NULL DEFAULT now(),
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `produit_id_UNIQUE` (`produit_id` ASC);
+  UNIQUE INDEX `produit_id_UNIQUE` (`produit_id` ASC),
   INDEX `fk_recette_produit1` (`produit_id` ASC),
   CONSTRAINT `fk_recette_produit1`
     FOREIGN KEY (`produit_id`)

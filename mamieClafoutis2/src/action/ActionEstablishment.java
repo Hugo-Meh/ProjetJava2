@@ -3,8 +3,6 @@ package action;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import entities.Establishment;
 import manager.EstablishmentManager;
 import service.C;
