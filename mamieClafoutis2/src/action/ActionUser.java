@@ -19,9 +19,9 @@ public class ActionUser {
 		}
 	}
 	
-	public static boolean insertUser( HttpServletRequest request,HttpServletResponse response,User newUser){
+	public static int insertUser( HttpServletRequest request,HttpServletResponse response,User newUser){
 	 
-		boolean retour= UserManager.Insert(newUser);
+		int retour= UserManager.Insert(newUser);
 		
 	return retour;	
 	}
@@ -30,5 +30,15 @@ public class ActionUser {
 		boolean retour=false;
 		retour=UserManager.VerifyNameUser(login);
 		return retour;
+	}
+	
+	public static boolean verifyToken(int id,String token){
+		boolean retour=false;
+		retour=UserManager.validateToken(id, token);
+		return retour;
+	}
+	
+	public static void validateuser(int id){
+		UserManager.validateUser(id);
 	}
 }

@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.ActionUser;
+
 /**
  * Servlet implementation class ValidateSignUp
  */
@@ -26,7 +28,16 @@ public class ValidateSignUp extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String idnewUser=request.getParameter("id");
+		String token=request.getParameter("token");
+		boolean isvalid;
+		if(idnewUser!=null && token!=null){
+			isvalid=ActionUser.verifyToken(Integer.parseInt(idnewUser), token);
+			if(isvalid){
+				ActionUser.validateuser(Integer.parseInt(idnewUser));
+				response.sendRedirect("http://localhost:8080/mamieClafoutis/SignIn.jsp");
+			}
+		}
 	}
 
 }

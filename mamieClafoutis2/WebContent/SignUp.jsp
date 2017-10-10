@@ -29,8 +29,7 @@
 			<fieldset>
 				<legend>Inscription</legend>
 
-				<label for="Etablissement"> Quel est votre fonction dans
-					l'entreprise :</label> <select id="Etablissement" name="etab">
+				<label for="Etablissement"> Dans quel etablissement travaillez vous ? </label> <select id="Etablissement" name="etab">
 					<%
 						if (estab != null) {
 							for (Establishment e : estab) {
@@ -42,7 +41,7 @@
 					%>
 
 				</select> <label for="roles"> Quel est votre fonction dans
-					l'entreprise :</label> <select id="roles" name="role">
+					l'entreprise ? </label> <select id="roles" name="role">
 					<%
 						if (allRole != null) {
 							for (Role r : allRole) {
@@ -60,7 +59,7 @@
 					 <label for="pwd">Mot de passe :</label> <input
 					type="password" id="pwd" name="pwd" required /> <label for="pwd">confirmation
 					Mot de passe :</label> <input type="password" id="pwd" name="pwd1" required />
-				<input type="submit" id="sub" name="signup" value="Sign Up" required />
+				<input type="submit" id="sub" name="signup" value="S'inscrire" required />
 			</fieldset>
 		</form>
 		</div>

@@ -98,8 +98,8 @@ public class UserManager {
 	}
 
 	// a l'inscription on appelle insert user
-	public static boolean Insert(User newUser) {
-		boolean retour = false;
+	public static int  Insert(User newUser) {
+		int retour = -1;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
 			ps.setString(1, newUser.getLastName());
@@ -113,7 +113,9 @@ public class UserManager {
 			int nbretour = ps.executeUpdate();
 
 			if (nbretour > 0) {
-				retour = true;
+				ResultSet rs = ps.getGeneratedKeys();
+				if(rs.next())
+				retour=rs.getInt(1);
 			}
 		}
 
@@ -331,7 +333,6 @@ public class UserManager {
 	// valider un utilisateur apres verification du token
 	public static boolean validateUser(int id) {
 		boolean retour = false;
-
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryValidateUser);
 			ps.setInt(1, id);
@@ -343,7 +344,6 @@ public class UserManager {
 		} finally {
 			ConnexionBDD.closeConnection();
 		}
-
 		return retour;
 	}
 }
