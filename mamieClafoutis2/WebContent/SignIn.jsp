@@ -11,7 +11,7 @@
 <jsp:include page="HTML/header.jsp"></jsp:include>
 <main>
 	<div class="wrapper">
-		<form class="form" action="ServletConnexion" method="post">
+		<form class="form" action="validateSignIn" method="post">
 			<fieldset>
 				<legend>Authentifiaction</legend>		
 				<label for="login">Identifiant</label>
@@ -20,8 +20,9 @@
 				<label for="login">Mot de passe</label>
 				<input type="password" id="password" name="pwd"/>	
 				
-				<label for="radio-remember">Se souvenir de moi</label>
-				<input type="radio" value="yes" name="remember" id="radio-remember">
+				<label for="remember">Se souvenir de moi</label>
+				<input type="checkbox" value="yes" name="remember" id="remember">
+				<input type="submit" value="connexion" name="connect"/>
 			</fieldset>
 		</form>
 	</div>

@@ -30,12 +30,14 @@ public class ValidateSignUp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idnewUser=request.getParameter("id");
 		String token=request.getParameter("token");
+		
 		boolean isvalid;
 		if(idnewUser!=null && token!=null){
 			isvalid=ActionUser.verifyToken(Integer.parseInt(idnewUser), token);
 			if(isvalid){
 				ActionUser.validateuser(Integer.parseInt(idnewUser));
 				response.sendRedirect("http://localhost:8080/mamieClafoutis/SignIn.jsp");
+				
 			}
 		}
 	}
