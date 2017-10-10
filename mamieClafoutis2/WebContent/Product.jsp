@@ -18,7 +18,7 @@
 	<main>
 	<div class="wrapper">
 		<div id="filterbox">
-			<form method="post" action="ServeletShowProduct" >
+			<form class="form" method="post" action="ServeletShowProduct" >
 				<div>
 					<input type="text" name="search" placeholder="chercher..">
 				</div>
@@ -43,8 +43,8 @@
 		User user = (User)request.getAttribute(C.User);
 		if(user != null && user.getId() == 1){
 		%>
-		<div >
-		
+		<div id="addProduct">
+			<a href="ServeletUpdateInsertProduct">Ajouter un Produit</a>
 		</div>
 		<%
 		}
@@ -53,10 +53,13 @@
 		<% 
 		ArrayList<Product> products = (ArrayList<Product>)request.getAttribute(C.ProductList);
 		for(Product product: products){
+			if(product.isVisible() || user.getId() != 1){
 			request.setAttribute(C.Product, product);
+			
 		%>
 			<jsp:include page="HTML/divProduct.jsp"/>
 		<%
+			}
 		}
 		%>
 		</div>

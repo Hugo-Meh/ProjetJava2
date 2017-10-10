@@ -7,20 +7,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import action.ActionCategory;
 import action.ActionProduct;
+import entities.Product;
+import entities.User;
+import service.C;
 
 /**
- * Servlet implementation class ServeletShowProduct
+ * Servlet implementation class ServeletUpdateInsertProduct
  */
-@WebServlet("/ServeletShowProduct")
-public class ServeletShowProduct extends HttpServlet {
+@WebServlet("/ServeletUpdateInsertProduct")
+public class ServeletUpdateInsertProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServeletShowProduct() {
+    public ServeletUpdateInsertProduct() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,19 +31,12 @@ public class ServeletShowProduct extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		String filter = request.getParameter("categorie");
-		if(filter == null || filter == ""){
-			ActionCategory.displayAll(request);
-			ActionProduct.displayAll(request);
-			request.getRequestDispatcher("Product.jsp").forward(request, response);
-		}
-		
-		else{
-			int idCat = Integer.parseInt(filter);
-			ActionCategory.displayAll(request);
-			ActionProduct.displayProductsByCategorieId(idCat, request);
-			request.getRequestDispatcher("Product.jsp").forward(request, response);
+		User user = (User)request.getAttribute(C.User);
+		Product product = null;
+		ActionProduct.displayProductByID((int) request.getAttribute(C.Product), request);
+		product = (Product)request.getAttribute(C.Product);
+		if(user.getId() == 1 && product != null){
+			
 		}
 	}
 
