@@ -3,15 +3,23 @@ package manager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import entities.User;
 import service.ConnexionBDD;
 
 public class UserManager {
 	private static String queryUser = "select * from utilisateur where userName = ? and password = ?";
 	private static String queryById = "select * from utilisateur where id = ?";
-	private static String queryInsert = "insert into utilisateur ('id', 'nom', 'prenom', 'etablisement_id', 'role_id', 'userName', 'password') values(?,?,?,?,?,?,?)";
-	private static String queryUpdate = "update utilisateur set id = ?, nom = ?, prenom = ?, etablisement_id = ?, role_id = ?, userName = ?, password = ?";
+	private static String queryInsert = "insert into utilisateur (nom, prenom, etablissement_id, role_id, userName,password,token) values(?,?,?,?,?,?,?)";
+	private static String queryUpdate = "update utilisateur set id = ?, nom = ?, prenom = ?, etablissement_id = ?, role_id = ?, userName = ?, password = ?";
 	private static String queryByNameUser = "select * from utilisateur where username=?";
+	private static String queryValidateUser = "update utilisateur set isvalid=true where id=?";
+	private static String queryTokenById = "select token from utilisateur where id=?";
+	private static String qureyByIdEtab = "select * from utilisateur where etblissement_id=?";
+	private static String queryByIdRole = " select * from utilisateur where role_id=?";
+	private static String queryByName = "select * from utilisateur where nom like '%?%' or prenom like '%?%' or userName like '%?%'";
+	private static String queryAll = "select * utilisateur";
 
 	public static User getUser(String login, String pwd) {
 		User user = null;
@@ -31,7 +39,8 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
-
+					user.setValid(result.getBoolean("isvalid"));
+					user.setToken(result.getString("token"));
 				}
 		}
 
@@ -71,6 +80,8 @@ public class UserManager {
 					user.setEstablishmentId(result.getInt("etablisement_id"));
 					user.setRoleId(result.getInt("role_id"));
 					user.setUsername(result.getString("userName"));
+					user.setValid(result.getBoolean("isvalid"));
+					user.setToken(result.getString("token"));
 
 				}
 		}
@@ -91,13 +102,16 @@ public class UserManager {
 		boolean retour = false;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
-			ps.setInt(1, newUser.getId());
-			ps.setString(2, newUser.getLastName());
-			ps.setString(3, newUser.getFirstName());
-			ps.setInt(4, newUser.getEstablishmentId());
-			ps.setInt(5, newUser.getRoleId());
-			ps.setString(6, newUser.getUsername());
+			ps.setString(1, newUser.getLastName());
+			ps.setString(2, newUser.getFirstName());
+			ps.setInt(3, newUser.getEstablishmentId());
+			ps.setInt(4, newUser.getRoleId());
+			ps.setString(5, newUser.getUsername());
+			ps.setString(6, newUser.getPwd());
+			ps.setString(7, newUser.getToken());
+			
 			int nbretour = ps.executeUpdate();
+
 			if (nbretour > 0) {
 				retour = true;
 			}
@@ -145,22 +159,191 @@ public class UserManager {
 	}
 
 	// get user by id etablishment
-	// get all user
-	// get user by role
-	// get user by name User
+	public static ArrayList<User> getByEstablishmentId(int id) {
+		ArrayList<User> users = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(qureyByIdEtab);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
 
-	static public boolean getByNameUser(String login) {
-		boolean retour = false;
+			if (result.isBeforeFirst())
+				users = new ArrayList<>();
+			while (result.next()) {
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("nom"));
+				user.setFirstName(result.getString("prenom"));
+				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setRoleId(result.getInt("role_id"));
+				user.setUsername(result.getString("userName"));
+				user.setValid(result.getBoolean("isvalid"));
+				user.setToken(result.getString("token"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			ConnexionBDD.closeConnection();
+		}
+		return users;
+	}
+
+	// get all user
+	public static ArrayList<User> getAll(int id) {
+		ArrayList<User> users = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryAll);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+
+			if (result.isBeforeFirst())
+				users = new ArrayList<>();
+			while (result.next()) {
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("nom"));
+				user.setFirstName(result.getString("prenom"));
+				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setRoleId(result.getInt("role_id"));
+				user.setUsername(result.getString("userName"));
+				user.setValid(result.getBoolean("isvalid"));
+				user.setToken(result.getString("token"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			ConnexionBDD.closeConnection();
+		}
+		return users;
+	}
+
+	// get user by role
+	public static ArrayList<User> getByRoleId(int id) {
+		ArrayList<User> users = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryByIdRole);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+
+			if (result.isBeforeFirst())
+				users = new ArrayList<>();
+			while (result.next()) {
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("nom"));
+				user.setFirstName(result.getString("prenom"));
+				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setRoleId(result.getInt("role_id"));
+				user.setUsername(result.getString("userName"));
+				user.setValid(result.getBoolean("isvalid"));
+				user.setToken(result.getString("token"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			ConnexionBDD.closeConnection();
+		}
+		return users;
+	}
+
+	// get user by name User
+	public static ArrayList<User> getByName(int id) {
+		ArrayList<User> users = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryByName);
+			ps.setInt(1, id);
+			ResultSet result = ps.executeQuery();
+
+			if (result.isBeforeFirst())
+				users = new ArrayList<>();
+			while (result.next()) {
+				User user = new User();
+				user.setId(result.getInt("id"));
+				user.setLastName(result.getString("nom"));
+				user.setFirstName(result.getString("prenom"));
+				user.setEstablishmentId(result.getInt("etablisement_id"));
+				user.setRoleId(result.getInt("role_id"));
+				user.setUsername(result.getString("userName"));
+				user.setValid(result.getBoolean("isvalid"));
+				user.setToken(result.getString("token"));
+				users.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		finally {
+			ConnexionBDD.closeConnection();
+		}
+		return users;
+	}
+
+	// a l'inscription on test si l'email existe dans la base ou nn?
+
+	static public boolean VerifyNameUser(String login) {
+		boolean retour = true;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(queryByNameUser);
 			ps.setString(1, login);
 			ResultSet rs = ps.executeQuery();
 			if (rs.isBeforeFirst())
+				retour = false;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+		return retour;
+	}
+
+	// verifier un token s'il est correct ou nn
+	public static boolean validateToken(int idUser, String token) {
+		boolean retour = false;
+		String localtoken = null;
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryTokenById);
+			ps.setInt(1, idUser);
+			ResultSet rs = ps.executeQuery();
+			if (rs.isBeforeFirst() && rs.next())
+				localtoken = rs.getString("token");
+			if (localtoken.equals(token))
+				retour = true;
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
+		}
+
+		return retour;
+	}
+
+	// valider un utilisateur apres verification du token
+	public static boolean validateUser(int id) {
+		boolean retour = false;
+
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(queryValidateUser);
+			ps.setInt(1, id);
+			if (ps.executeUpdate() > 0)
 				retour = true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
 		}
+
 		return retour;
 	}
 }

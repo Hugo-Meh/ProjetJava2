@@ -11,15 +11,11 @@ public class ProductManager {
 	// les attribut Private static String Query
 	private static String queryAll = "select * from produit";
 	private static String queryByIdCategory = "select * from produit where categorie_id=?";
-	private static String queryByName = "select * from produit where nom=?";
+	private static String queryByName = "select * from produit where nom like \"%?%\" ";
 	private static String queryById = "select * from produit where id=?";
-	private static String queryInsert = "insert into produit ('nom','categorie_id','reference','description','prix','url_Image','estvisible') values(?,?,?,?,?,?,?)";
+	private static String queryInsert = "insert into produit ('nom','categorie_id','reference','description','prix','url_Image','estvisible','poid','unite') values(?,?,?,?,?,?,?,?,?)";
 	private static String queryUpdate = "update produit set nom=? ,categorie_id=?, description=?,prix=?, url_Image=?,estvisible=? where id=?";
-//	private static String queryDelete = "delete from produit where id=?";
-//	private static String queryDeleteAssociateLineIngredient = "delete from ligne_ingredient where produit_id=?";
-//	private static String queryDeleteAssociateRecipe = "delete from recette where produit_id=?";
-//	private static String queryDeleteAssociateLineCommande = "delete from ligne_de_commande where produit_id=?";
-	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as as categorie_id,P.description as description,P.prix as prix, "
+	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as categorie_id,P.description as description,P.prix as prix, "
 			+ "P.url_image as url_image,P.reference as reference,LC.quantite as quantite, from produit as P inner join ligne_de_commande as LC on P.id=LC.produit_idproduit"
 			+ "inner join commande as C on LC.commande_id=C.id where C.id=?";
 
@@ -159,10 +155,10 @@ public class ProductManager {
 			PreparedStatement ps = ConnexionBDD.getPs(queryInsert);
 			ps.setString(1, item.getName());
 			ps.setInt(2, item.getIdCategroy());
-			ps.setString(3, item.getRef());
-			ps.setString(4, item.getDescription());
-			ps.setFloat(5, item.getPrice());
-			ps.setString(6, item.getUrlImage());
+			ps.setString(3, (item.getRef() != null ? item.getRef() : ""));
+			ps.setString(4, (item.getDescription() != null ? item.getDescription() : ""));
+			ps.setFloat(5, (item.getPrice() >= 0 ? item.getPrice() : 0));
+			ps.setString(6, (item.getUrlImage() != null ? item.getUrlImage() : ""));
 			ps.setBoolean(7, item.isVisible());
 			if (ps.executeUpdate() > 0) {
 				ResultSet rs = ps.getGeneratedKeys();
@@ -235,6 +231,8 @@ public class ProductManager {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			ConnexionBDD.closeConnection();
 		}
 
 		return products;

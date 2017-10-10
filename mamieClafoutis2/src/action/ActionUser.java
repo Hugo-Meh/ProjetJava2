@@ -1,8 +1,7 @@
 package action;
 
-import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import entities.User;
@@ -20,8 +19,16 @@ public class ActionUser {
 		}
 	}
 	
-	public static void insertUser(User newUser){
-		User user = newUser;
+	public static boolean insertUser( HttpServletRequest request,HttpServletResponse response,User newUser){
+	 
+		boolean retour= UserManager.Insert(newUser);
 		
+	return retour;	
+	}
+	
+	public static boolean verifyUserName(String login){
+		boolean retour=false;
+		retour=UserManager.VerifyNameUser(login);
+		return retour;
 	}
 }

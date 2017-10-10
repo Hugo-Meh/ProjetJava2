@@ -8,11 +8,12 @@ import entities.Establishment;
 import service.ConnexionBDD;
 
 public class EstablishmentManager {
-	private static String queryAll = "select * from etablisement";
-	private static String queryUser = "select etablisement_id from utilisateur where id = ?";
-	private static String queryType = "select * from etablisement where type_id = (select id from type where denomination = ?)";
-	private static String queryInsert = "insert into etablisement ('id', 'name', 'Adresse_id', 'tel', 'type_id') values(?,?,?,?,?)";
-	private static String queryUpdate = "update etablisement set id = ?, name = ?, Adresse_id = ?, tel = ?, type_id = ? where id = ?";
+	private static String queryAll = "select * from etablissement";
+	private static String queryByIdUser = "select E.id as id,E.name as name,E.type_id as type_id,E.tel as tel, E.Adresse_id as Adresse_id "
+			+ " from utilisateur as U  inner join etablissement as E on U.Etablissement_id=E.id where U.id = ?";
+	private static String queryType = "select * from etablissement where type_id = (select id from type where denomination = ?)";
+	private static String queryInsert = "insert into etablissement ( 'name', 'Adresse_id', 'tel', 'type_id') values(?,?,?,?)";
+	private static String queryUpdate = "update etablissement set name = ?, Adresse_id = ?, tel = ?, type_id = ? where id = ?";
 
 	public static ArrayList<Establishment> getAll() {
 		ArrayList<Establishment> establishment = null;
@@ -50,21 +51,18 @@ public class EstablishmentManager {
 		Establishment establishment = null;
 
 		try {
-			PreparedStatement ps = ConnexionBDD.getPs(queryUser);
+			PreparedStatement ps = ConnexionBDD.getPs(queryByIdUser);
 			ps.setInt(1, idUser);
 			ResultSet result = ps.executeQuery();
 
-			if (result != null)
+			if (result.isBeforeFirst())
 				establishment = new Establishment();
-
 			if (result.next()) {
-				Establishment e = new Establishment();
-				e.setId(result.getInt("id"));
-				e.setName(result.getString("name"));
-				e.setIdAdress(result.getInt("Adresse_id"));
-				e.setTel(result.getString("tel"));
-				e.setType(result.getInt("type_id"));
-
+				establishment.setId(result.getInt("id"));
+				establishment.setName(result.getString("name"));
+				establishment.setIdAdress(result.getInt("Adresse_id"));
+				establishment.setTel(result.getString("tel"));
+				establishment.setType(result.getInt("type_id"));
 			}
 		}
 
