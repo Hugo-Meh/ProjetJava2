@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import action.ActionOrder;
+import action.ActionProduct;
 import entities.User;
 
 /**
@@ -28,10 +30,17 @@ public class ServeletRedirectShowOrder extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		User user = (User) request.getSession(true).getAttribute("MyUser");
+		User user = (User) request.getSession(false).getAttribute("MyUser");
+		String lineOrder=request.getParameter("idOrder");
 		if (user == null || user.getRoleId() != 1) {
 			response.sendRedirect("Index.jsp");
 		} else {
+			if(lineOrder!=null){
+				ActionProduct.DisplayByIdOrder(Integer.parseInt(lineOrder), request);
+				
+			}else
+			ActionOrder.displayAll(request);
+			
 			request.getRequestDispatcher("WEB-INF/ShowOrder.jsp").forward(request, response);
 		}
 	}

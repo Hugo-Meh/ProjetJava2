@@ -54,5 +54,10 @@ public class ActionProduct {
 		}
 	}
 	
-	
+	public static void DisplayByIdOrder(int id,HttpServletRequest request){
+		ArrayList<Product> allProdductInOrder=ProductManager.getByIdOrder(id);
+		if(allProdductInOrder!=null){
+			request.setAttribute(C.ProductList, allProdductInOrder);
+		}
+	}
 }

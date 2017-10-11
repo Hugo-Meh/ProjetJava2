@@ -73,25 +73,26 @@ public class ServletSignUp extends HttpServlet {
 		
 		if (idNewUser>0) {
 			String to = newUser.getUsername();
-			
-			String sujet ="validation d'inscription" ;
-			
-			String messageToSend =  ""
-					+ "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\r\n"
-					+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n"
-					+ "<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
-					+ "<head>\r\n"
-					+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />\r\n"
-					+ "<title>Votre Facture</title>\r\n"
-					+ "</head>\r\n"
-					+ "<body>\r\n"
-					+ "	<p style=\"color:red\">"
-					+ "http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken()
-					+ "</p>\r\n"
-					+ "</body>\r\n" + "</html>";	
-			System.out.println("le lien "+"http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken());
-			GestionMail.sendEmail(messageToSend, to, sujet);
-			request.getRequestDispatcher("/WEB-INF/validateSignUp.html").forward(request, response);
+//			
+//			String sujet ="validation d'inscription" ;
+//			
+//			String messageToSend =  ""
+//					+ "<?xml version=\"1.0\" encoding=\"ISO-8859-1\" ?>\r\n"
+//					+ "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n"
+//					+ "<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n"
+//					+ "<head>\r\n"
+//					+ "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=ISO-8859-1\" />\r\n"
+//					+ "<title>Votre Facture</title>\r\n"
+//					+ "</head>\r\n"
+//					+ "<body>\r\n"
+//					+ "	<p style=\"color:red\">"
+//					+ "http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken()
+//					+ "</p>\r\n"
+//					+ "</body>\r\n" + "</html>";	
+//			System.out.println("le lien "+"http://localhost:8080/mamieClafoutis/validateSignUp?id="+idNewUser+"&token="+newUser.getToken());
+//			GestionMail.sendEmail(messageToSend, to, sujet);
+			ActionUser.validateuser(idNewUser);
+		request.getRequestDispatcher("/WEB-INF/validateSignUp.jsp").forward(request, response);
 			
 		} else {
 			request.setAttribute(C.ResponseSignUp, newUser.getUsername() + "   est dejà utilisé");

@@ -15,8 +15,8 @@ public class ProductManager {
 	private static String queryById = "select * from produit where id=?";
 	private static String queryInsert = "insert into produit ('nom','categorie_id','reference','description','prix','url_Image','estvisible','poid','unite') values(?,?,?,?,?,?,?,?,?)";
 	private static String queryUpdate = "update produit set nom=? ,categorie_id=?, description=?,prix=?, url_Image=?,estvisible=? where id=?";
-	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as categorie_id,P.description as description,P.prix as prix, "
-			+ "P.url_image as url_image,P.reference as reference,LC.quantite as quantite, from produit as P inner join ligne_de_commande as LC on P.id=LC.produit_idproduit"
+	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as categorie_id,P.description as description,P.prix as prix,"
+			+ "P.url_image as url_image,P.reference as reference,LC.quantite as quantite from produit as P inner join ligne_de_commande as LC on P.id=LC.produit_idproduit "
 			+ "inner join commande as C on LC.commande_id=C.id where C.id=?";
 
 	// retourner tout les produit de la table produit
@@ -176,7 +176,7 @@ public class ProductManager {
 	}
 
 	// une methode qui utilise la meme query qui modifie tout les champs d'un
-	// produit meme s'il y a une seule colonne à modifier
+	// produit meme s'il y a une seule colonne ï¿½ modifier
 	public static boolean Update(Product item) {
 		int nbrUpdate = 0;
 		boolean retour = false;

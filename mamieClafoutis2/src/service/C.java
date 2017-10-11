@@ -8,7 +8,7 @@ public class C {
 	public static final String IngredientList = "MyIndredientsList";
 
 	public static final String OrderList = "MyOrderList";
-
+	
 	public static final String CategoryList = "MyCategoryList";
 	public static final String Category = "MyCategorie";
 
@@ -25,4 +25,5 @@ public class C {
 	public static final String ResponseSignUp="ResponseSignUp";
 	
 	public static final String UserErrorData="UserErrorData";
+	
 }

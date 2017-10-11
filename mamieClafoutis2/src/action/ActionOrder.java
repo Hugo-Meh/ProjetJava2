@@ -11,6 +11,14 @@ import service.C;
 import entities.Order;
 
 public class ActionOrder {
+	public static void displayAll( HttpServletRequest request){
+		ArrayList<Order> allOrder= OrderManager.getAll();
+		if(allOrder!=null){
+			request.setAttribute(C.OrderList, allOrder);
+		}
+		
+		
+	}
 	
 	public static void displayValidebyAdminIntoDate (Date dateStart, Date dateEnd, HttpServletRequest request){
 		ArrayList<Order> orders = null;
