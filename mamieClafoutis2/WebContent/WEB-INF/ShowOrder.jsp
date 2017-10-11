@@ -87,7 +87,7 @@
 				<%
 					}
 				%>
-			<tr><td colspan=3 >Qunatite total</td><td colspan=2><%=allQuantity %></td></tr>
+			<tr><td colspan=3 >Quantite total</td><td colspan=2><%=allQuantity %></td></tr>
 			</table>
 			<%
 				}

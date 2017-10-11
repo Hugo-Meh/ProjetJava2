@@ -125,4 +125,10 @@ header{
 #categories{
 	display:flex;
 }
+#orderForm{
+	width80%
+	display:flex;
+	flex-direction:column;
+	align-items: center;
+}
 

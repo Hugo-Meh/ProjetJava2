@@ -9,7 +9,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<jsp:include page="HTML/header.jsp"></jsp:include>
+<jsp:include page="/HTML/header.jsp"></jsp:include>
 <main>
 	<div class="wrapper">
 		<form class="form" action="ServletShowProduct" method="post">

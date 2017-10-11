@@ -18,6 +18,7 @@ public class ProductManager {
 	private static String queryByIdOrder = "select P.id as id, P.nom as nom,P.categorie_id as categorie_id,P.description as description,P.prix as prix,"
 			+ "P.url_image as url_image,P.reference as reference,LC.quantite as quantite from produit as P inner join ligne_de_commande as LC on P.id=LC.produit_idproduit "
 			+ "inner join commande as C on LC.commande_id=C.id where C.id=?";
+	private static String insertProductInLineOrder = "insert into ligne_de_commande(commande_id , produit_idproduit, quantite)values(?,?,?)";
 
 	// retourner tout les produit de la table produit
 	public static ArrayList<Product> getAll() {
@@ -236,5 +237,23 @@ public class ProductManager {
 		}
 
 		return products;
+	}
+
+	public static boolean insertInLineOrder(int idOrder, int idProduct, int qty) {
+		boolean retour = false;
+
+		try {
+			PreparedStatement ps = ConnexionBDD.getPs(insertProductInLineOrder);
+			ps.setInt(1, idOrder);
+			ps.setInt(2, idProduct);
+			ps.setInt(3, qty);
+			if (ps.executeUpdate() > 0)
+				retour = true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return retour;
 	}
 }

@@ -7,10 +7,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%-- <jsp:include page="HTML/header.jsp"></jsp:include> --%>
-<div class="wrapper">votre inscription est bien enregistré Vous receverez un email sous peu pour valider votre inscription 
-  <a href="Index.jsp"> retour à l'accueil</a>
+<jsp:include page="/HTML/header.jsp"></jsp:include>
+<main>
+<div class="wrapper">
+<div>votre inscription est bien enregistré Vous receverez un email sous peu pour valider votre inscription 
+  <a href="Index.jsp"> retour à l'accueil</a><div>
 </div>
-
+</main>
 </body>
 </html>

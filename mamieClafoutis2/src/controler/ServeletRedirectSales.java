@@ -31,7 +31,7 @@ public class ServeletRedirectSales extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		User user = (User) request.getSession(true).getAttribute("MyUser");
+		User user = (User) request.getSession(false).getAttribute("MyUser");
 		if (user == null || user.getRoleId() != 5) {
 			response.sendRedirect("Index.jsp");
 		} else {

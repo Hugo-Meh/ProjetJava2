@@ -18,7 +18,8 @@ public class OrderManager {
 	private static String queryFirstDate = "select min(date) from commande";
 	private static String queryLastDate = "select top max(date) from commande";
 	private static String UpdateAdminValidate = "Update commande set valide=? where id=?";
-	private static String Insert = "insert into commande ('utilisateur_id') values (?)";
+	private static String Insert = "insert into commande (utilisateur_id) values (?)";
+	
 
 	public static ArrayList<Order> getAll() {
 		ArrayList<Order> order = null;
@@ -74,7 +75,7 @@ public class OrderManager {
 		return order;
 	}
 
-	// retourner toutes les commandes validée par une succursale pour un temps
+	// retourner toutes les commandes validï¿½e par une succursale pour un temps
 	// donne
 	// une boucle sur laquery pour chaque valeur du tableau id_Etab
 	// les costumers sera une seule valeur l'id de leur etablissement et ladmin
@@ -113,7 +114,7 @@ public class OrderManager {
 		return order;
 	}
 
-	// retournée toutes les commandes preparer par l'atelier pour valider la
+	// retournï¿½e toutes les commandes preparer par l'atelier pour valider la
 	// livraison
 	// on peut mettre en parametre les date our filtrer ou directement afficher
 	// que les commande de la semaine qui doivent etre preparer
@@ -124,7 +125,7 @@ public class OrderManager {
 		return null;
 	}
 
-	// retourne les commande d'un user donnée pour un interval de temps donnée
+	// retourne les commande d'un user donnï¿½e pour un interval de temps donnï¿½e
 	// pour les costumers puissent voir leur commandes en cours pour pouvoir
 	// modifier
 	public static ArrayList<Order> getByIdUser(int user, Date dateStart, Date dateEnd) {
@@ -236,7 +237,7 @@ public class OrderManager {
 
 	// insertion des commandes par les clients
 	// retoune la valeur de l'id genere a linsertion
-	public static int Insert(int idUser, Order order) {
+	public static int Insert(int idUser) {
 		int retour = -1;
 		try {
 			PreparedStatement ps = ConnexionBDD.getPs(Insert);

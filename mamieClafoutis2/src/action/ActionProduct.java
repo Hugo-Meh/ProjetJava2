@@ -60,4 +60,8 @@ public class ActionProduct {
 			request.setAttribute(C.ProductList, allProdductInOrder);
 		}
 	}
+	
+	public static void InsertProductInOrderLine(int idOrder, int idProduct, int qty){
+		ProductManager.insertInLineOrder(idOrder, idProduct, qty);
+	}
 }

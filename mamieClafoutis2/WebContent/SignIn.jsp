@@ -1,6 +1,7 @@
 <%@page import="manager.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <% String checked=CookieManager.getCookieValue("remember", request); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,7 +23,7 @@
 				<input type="password" id="password" name="pwd"/>	
 				
 				<label for="remember">Se souvenir de moi</label>
-				<input type="checkbox" value="yes" name="remember" id="remember" <%=(CookieManager.getCookieValue("remember", request)!=null?CookieManager.getCookieValue("remember", request):"") %>/>
+				<input type="checkbox" value="yes" name="remember" id="remember" <%=(checked!=null?checked:"") %>/>
 				<input type="submit" value="connexion" name="connect"/>
 			</fieldset>
 		</form>

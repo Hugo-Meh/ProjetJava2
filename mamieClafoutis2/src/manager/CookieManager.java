@@ -40,6 +40,4 @@ public class CookieManager {
 
 		return retout;
 	} 
-	
-	
 }

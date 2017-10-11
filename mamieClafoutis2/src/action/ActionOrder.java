@@ -52,9 +52,9 @@ public class ActionOrder {
 			}
 	}
 	
-	public static void Insert(int id, Order anOrder){
-		if (anOrder != null){
-			OrderManager.Insert(id,anOrder);
-		}
+	public static int Insert(int id){
+		
+			 return OrderManager.Insert(id);
+		
 	}
 }
